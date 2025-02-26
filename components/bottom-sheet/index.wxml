@@ -1,0 +1,23 @@
+<!-- 遮罩层 -->
+<!-- <view class="drawer-mask {{ visible ? 'visible' : '' }}" bindtap="onMaskTap" catchtouchmove="preventTouchMove"></view> -->
+
+<!-- 滑动区域 -->
+<view 
+  class="drawer {{ visible ? 'visible' : '' }} {{ animating ? 'animating' : '' }}" 
+  style="transform: translateY({{ translateY }}px);"
+  bindtouchstart="touchStart"
+  catchtouchmove="touchMove"
+  bindtouchend="touchEnd"
+>
+  <!-- 顶部把手 -->
+  <view class="drawer-handle"></view>
+  <!-- 内容区域 -->
+  <scroll-view 
+    scroll-y 
+    class="drawer-content"
+    style="height: calc(100% - 40px);"
+    catchtouchmove="preventBubble"
+  >
+    <slot></slot>
+  </scroll-view>
+</view> 

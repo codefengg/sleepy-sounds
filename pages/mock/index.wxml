@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/assets/images/bg.png" mode="aspectFill"></image>
+  <!-- 遮罩层 -->
+  <view class="mask"></view>
+  <!-- 内容区域 -->
+  <view class="content">
+    <!-- 标题 -->
+    <view class="title">夜深了</view>
+    <!-- 副标题 -->
+    <view class="subtitle">来一曲美妙的音乐吧 good night！</view>
+  </view>
+  <!-- 自定义tabbar -->
+  <view class="tabbar">
+    <!-- 左侧 -->
+    <view class="tab-item left">
+      <image class="icon" src="/assets/images/sleep.png" mode="aspectFit"></image>
+      <text class="text">助眠</text>
+    </view>
+    <!-- 中间 -->
+    <image class="press-icon" src="/assets/images/press.png" mode="aspectFit"></image>
+    <!-- 右侧 -->
+    <view class="tab-item right">
+      <image class="icon" src="/assets/images/breathe.png" mode="aspectFit"></image>
+      <text class="text">呼吸</text>
+    </view>
+  </view>
+</view>
+<!-- 使用新的抽屉组件 -->
+<draggable-wx-sheet min-size="0.5" max-size="1" initial-size="0.5" bindclose="onDrawerClose">
+  <view class="drawer-content">
+    <!-- 抽屉内容后续添加 -->
+  </view>
+</draggable-wx-sheet>

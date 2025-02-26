@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Sleepy Sounds",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "renderer": "skyline",
+  "lazyCodeLoading": "requiredComponents",
+  "componentFramework": "glass-easel",
+  "rendererOptions": {
+      "skyline": {
+        "defaultDisplayBlock": true,
+        "defaultContentBox": true,
+        "disableABTest": true
+      }
+  }
+} 

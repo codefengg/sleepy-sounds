@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "draggable-wx-sheet": "../../components/draggable-wx-sheet/index"
+  },
+  "disableScroll": true,
+  "navigationStyle": "custom"
+} 

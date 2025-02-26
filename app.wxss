@@ -1,0 +1,10 @@
+page {
+  --px: 0.5px;  /* 1rpx = 0.5px */
+}
+
+@font-face {
+  font-family: 'AlibabaPuHuiTi';
+  src: url('https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlibabaPuHuiTi-2/AlibabaPuHuiTi-2-85-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+} 

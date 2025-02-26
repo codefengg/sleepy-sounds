@@ -1,0 +1,29 @@
+<view class="tab-container">
+  <!-- 主tab -->
+  <view class="tab-list">
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="index"
+      class="tab-item {{currentTab === index ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-index="{{index}}"
+      id="tab-{{index}}"
+    >
+      {{item}}
+    </view>
+    <view class="tab-line" style="left: {{lineLeft}}px; opacity: {{lineOpacity}}"></view>
+  </view>
+
+  <!-- 副tab -->
+  <view class="sub-tab-list">
+    <view 
+      wx:for="{{subTabs[currentTab]}}" 
+      wx:key="index"
+      class="sub-tab-item {{currentSubTab === index ? 'active' : ''}}"
+      bindtap="switchSubTab"
+      data-index="{{index}}"
+    >
+      {{item}}
+    </view>
+  </view>
+</view> 

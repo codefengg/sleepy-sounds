@@ -1,0 +1,95 @@
+.tab-list {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tab-item {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-right: 24px;
+  padding: 12px 0 18px 0;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.tab-line {
+  position: absolute;
+  bottom: 10px;
+  width: 30px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: left 0.3s;
+}
+
+/* 副tab样式 */
+.sub-tab-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sub-tab-item {
+  width: 70px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s;
+  border-radius: 33px;
+}
+
+.sub-tab-item.active {
+  color: #ffffff;
+  background-color: rgba(217, 217, 217, 0.15);
+}
+
+/* 列表样式 */
+.content-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 0 1px;  /* 防止阴影被切断 */
+}
+
+.list-item {
+  width: 106px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-image {
+  width: 106px;
+  height: 120px;
+  border-radius: 12px;
+}
+
+.item-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+/* 处理每行最后一个元素的右边距 */
+.list-item:nth-child(3n) {
+  margin-right: 0;
+}
+
+/* 处理不满一行时的对齐方式 */
+.list-item:nth-child(3n-2) {
+  margin-right: 13px;
+}
+
+.list-item:nth-child(3n-1) {
+  margin-right: 13px;
+} 

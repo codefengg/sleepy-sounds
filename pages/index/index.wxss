@@ -3,6 +3,7 @@
   position: absolute;
   width: 100%;
   bottom: 0;
+  z-index: 3;
 }
 
 .scrollable {
@@ -14,6 +15,16 @@
   flex-direction: column;
   padding: 0 16px;
   box-sizing: border-box;
+  /* 隐藏滚动条 */
+  -webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+  /* 兼容性写法 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .place-bg{
@@ -68,7 +79,7 @@
 
 .content {
   position: relative;
-  z-index: 3;
+  z-index: 5;
 }
 
 .title {
@@ -86,13 +97,13 @@
   top: 145px;
   left: 32px;
   font-size: 14px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .drawer-content {
-  background-color: rgba(49, 59, 131, 0.22);
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
+  background-color: rgba(49, 59, 131, 0.24);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 
 .tabbar {
@@ -104,10 +115,11 @@
   height: 52px;
   background: #11153C;
   border-radius: 40px;
-  z-index: 5;
+  z-index: 6;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tab-item {
@@ -159,7 +171,7 @@
 .content-list {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -6.5px;  /* 抵消第一个和最后一个item的margin，使整体对齐 */
+  margin-top: 16px;
 }
 
 .list-item {
@@ -169,12 +181,15 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  box-sizing: border-box;
+  margin-right: 13px;
 }
 
 .item-image {
   width: 100%;
+  height: 120px;
   /* 保持106:120的宽高比 */
-  aspect-ratio: 0.88;
+  /* aspect-ratio: 0.88; */
   border-radius: 12px;
 }
 
@@ -198,10 +213,57 @@
 }
 
 /* 处理不满一行时的对齐方式 */
-.list-item:nth-child(3n-2) {
+/* .list-item:nth-child(3n-2) {
   margin-right: 13px;
 }
 
 .list-item:nth-child(3n-1) {
   margin-right:13px;
-} 
+}  */
+
+/* 上部蒙层 */
+.top-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* 下部蒙层 */
+.bottom-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* 调整其他元素的z-index */
+.mask {
+  z-index: 2;
+}
+
+.content {
+  z-index: 5;
+}
+
+.tabbar {
+  z-index: 6;
+}
+
+.bottom-overlay-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.tab-item.active .text {
+  color: #fff;
+  font-weight: 500;
+}

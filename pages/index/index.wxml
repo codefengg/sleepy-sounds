@@ -3,6 +3,13 @@
   <image class="bg-image" src="/assets/images/bg.png" mode="aspectFill"></image>
   <!-- 遮罩层 -->
   <view class="mask"></view>
+  
+  <!-- 上部蒙层 -->
+  <image class="top-overlay" src="/assets/images/rectangle-top.png" mode="widthFix"></image>
+  
+  <!-- 下部蒙层 -->
+  <image class="bottom-overlay" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
+  
   <!-- 内容区域 -->
   <view class="content">
     <!-- 标题 -->
@@ -10,24 +17,34 @@
     <!-- 副标题 -->
     <view class="subtitle">来一曲美妙的音乐吧 good night！</view>
   </view>
+  
   <!-- 自定义tabbar -->
   <view class="tabbar">
     <!-- 左侧 -->
-    <view class="tab-item left">
-      <image class="icon" src="/assets/images/sleep.png" mode="aspectFit"></image>
+    <view class="tab-item left {{activeTab === 'sleep' ? 'active' : ''}}" bindtap="switchTab" data-tab="sleep">
+      <image class="icon" src="/assets/images/{{activeTab === 'sleep' ? 'sleep-on' : 'sleep'}}.png" mode="aspectFit"></image>
       <text class="text">助眠</text>
     </view>
     <!-- 中间 -->
     <image class="press-icon" src="/assets/images/press.png" mode="aspectFit"></image>
     <!-- 右侧 -->
-    <view class="tab-item right">
-      <image class="icon" src="/assets/images/breathe.png" mode="aspectFit"></image>
+    <view class="tab-item right {{activeTab === 'breathe' ? 'active' : ''}}" bindtap="switchTab" data-tab="breathe">
+      <image class="icon" src="/assets/images/{{activeTab === 'breathe' ? 'breathe-on' : 'breathe'}}.png" mode="aspectFit"></image>
       <text class="text">呼吸</text>
     </view>
   </view>
 </view>
 <draggable-sheet class="sheet" style="height: {{sheetHeight}}px;" initial-child-size="{{minSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" snap-sizes="{{snapSizes}}" worklet:onsizeupdate="onSizeUpdate">
-  <scroll-view associative-container="draggable-sheet" class="scrollable drawer-content" scroll-y type="custom" show-scrollbar="{{false}}">
+  <!-- 下部蒙层放在这里 -->
+  <image class="bottom-overlay-inner" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
+  
+  <scroll-view 
+    associative-container="draggable-sheet" 
+    class="scrollable drawer-content" 
+    scroll-y 
+    type="custom" 
+    show-scrollbar="{{false}}"
+  >
     <sticky-section>
       <sticky-header>
         <view class="bar">

@@ -1,0 +1,9 @@
+<view class="nav-bar" style="padding-top: {{statusBarHeight}}px; height: {{navBarHeight}}px; background-color: {{backgroundColor}};">
+  <view class="nav-content" style="height: {{menuRect.height}}px;">
+    <view wx:if="{{showBack}}" class="back-btn" bindtap="onBack">
+      <image class="back-icon" src="/assets/images/arrow-left.png" mode="aspectFit"></image>
+    </view>
+    <view class="title" style="color: {{textColor}};">{{title}}</view>
+  </view>
+</view>
+<view style="height: {{statusBarHeight + navBarHeight}}px;"></view> 

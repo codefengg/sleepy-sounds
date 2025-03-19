@@ -1,0 +1,24 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/assets/images/breath-background.png" mode="aspectFill"></image>
+  
+  <!-- 导航栏 -->
+  <nav-bar title="" backgroundColor="transparent"></nav-bar>
+  
+  <!-- 列表 -->
+  <view class="breath-list">
+    <view 
+      class="breath-item" 
+      wx:for="{{breathItems}}" 
+      wx:key="id"
+      bindtap="onItemTap"
+      data-id="{{item.id}}"
+    >
+      <image class="item-image" mode="aspectFill"></image>
+      <view class="item-info">
+        <text class="item-title">{{item.title}}</text>
+        <text class="item-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+</view> 

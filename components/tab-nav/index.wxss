@@ -10,6 +10,8 @@
   margin-right: 24px;
   padding: 12px 0 18px 0;
   transition: all 0.3s;
+  display: flex;
+  align-items: flex-end; /* 底部对齐 */
 }
 
 .tab-item.active {
@@ -25,6 +27,16 @@
   background: #ffffff;
   border-radius: 3px;
   transition: left 0.3s;
+}
+
+.tab-icon {
+  width: 20px;
+  height: 22px;
+  margin-right: 4px;
+}
+
+.tab-text {
+  line-height: 22px; /* 与图标高度一致，确保底部对齐 */
 }
 
 /* 副tab样式 */

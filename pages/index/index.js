@@ -17,13 +17,13 @@ Page({
     snapSizes: [],
     middleSize,
     currentTab: 0,
-    activeTab: 'sleep', // 默认助眠为激活状态，可选值: 'sleep', 'breathe'
+    activeTab: 'sleep', // 默认助眠为激活状态，可选值: 'sleep', 'breathe',
+    tabIcons: [null, null, '/assets/images/mie.png'] // 第三个标签有图标
   },
 
   onSizeUpdate(e) {
     'worklet'
     const distance = sheetHeight - e.pixels
-    this.progress.value = distance >= 20 ? 1 : distance / 20
   },
 
   /**

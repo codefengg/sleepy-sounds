@@ -41,7 +41,11 @@
         </view>
         <!-- tab部分 -->
         <view class="main-tab-container">
-          <tab-nav currentTab="{{currentTab}}" bind:change="onTabChange"></tab-nav>
+          <tab-nav 
+            currentTab="{{currentTab}}" 
+            tabIcons="{{tabIcons}}"
+            bind:change="onTabChange"
+          ></tab-nav>
         </view>
       </sticky-header>
       <!-- 列表 -->

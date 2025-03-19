@@ -2,7 +2,11 @@ Component({
   properties: {
     tabs: {
       type: Array,
-      value: ['助眠音乐', '白噪音', '冥想']
+      value: ['助眠音乐', '白噪音', '数羊']
+    },
+    tabIcons: {
+      type: Array,
+      value: [null, null, '/assets/images/mie.png'] // 第三个标签有图标
     },
     currentTab: {
       type: Number,

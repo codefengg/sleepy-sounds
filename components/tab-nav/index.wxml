@@ -9,7 +9,8 @@
       data-index="{{index}}"
       id="tab-{{index}}"
     >
-      {{item}}
+      <image wx:if="{{tabIcons[index]}}" class="tab-icon" src="{{tabIcons[index]}}" mode="aspectFit"></image>
+      <text class="tab-text">{{item}}</text>
     </view>
     <view class="tab-line" style="left: {{lineLeft}}px; opacity: {{lineOpacity}}"></view>
   </view>

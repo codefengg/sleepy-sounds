@@ -1,0 +1,6 @@
+<view>
+  <nav-bar title="呼吸详情" backgroundColor="transparent"></nav-bar>
+  <view class="container">
+    <text>呼吸详情页面开发中...</text>
+  </view>
+</view> 

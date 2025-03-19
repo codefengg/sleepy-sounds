@@ -1,0 +1,51 @@
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.back-btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 87px;
+  height: 32px;
+  padding-left: 16px;
+}
+
+.back-icon {
+  width: 9px;
+  height: 17px;
+}
+
+.title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.fallback-icon {
+  font-size: 24px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-text {
+  font-size: 24px;
+  color: #ffffff;
+  font-weight: bold;
+} 

@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/detail/index",
-    "pages/breath-list/index"
+    "pages/breath-list/index",
+    "pages/breath-detail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

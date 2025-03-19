@@ -51,7 +51,7 @@
       <!-- 列表 -->
       <view class="grid-list">
         <view class="grid-item" wx:for="{{12}}" wx:key="index">
-          <view class="list-item">
+          <view class="list-item" bindtap="onItemTap" data-id="{{index + 1}}">
             <image class="item-image" src="/assets/images/video-bg.png" mode="aspectFill"></image>
             <text class="item-text">轻音乐{{index + 1}}</text>
           </view>

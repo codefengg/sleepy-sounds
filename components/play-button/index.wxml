@@ -1,0 +1,10 @@
+<view class="play-container">
+  <view class="play-button" bindtap="onTap" style="width: {{size}}px; height: {{size}}px;">
+    <image 
+      class="play-icon {{isPlaying ? 'pause-icon-size' : 'play-icon-adjust'}}" 
+      src="{{isPlaying ? '/assets/images/pause.png' : '/assets/images/play.png'}}" 
+      mode="aspectFit"
+    ></image>
+  </view>
+  <text wx:if="{{showText && text}}" class="play-text">{{text}}</text>
+</view> 

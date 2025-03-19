@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/breath-detail/index",
+          "pathName": "pages/breath-detail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/breath-list/index",
           "pathName": "pages/breath-list/index",
           "query": "",

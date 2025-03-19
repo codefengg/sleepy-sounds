@@ -40,9 +40,34 @@ Page({
 
   // 切换底部标签页
   switchTab(e) {
-    const tab = e.currentTarget.dataset.tab
+    const tab = e.currentTarget.dataset.tab;
+    
+    if (tab === 'breathe') {
+      // 点击呼吸标签时跳转到呼吸列表页面
+      wx.navigateTo({
+        url: '/pages/breath-list/index'
+      });
+      return; // 不执行后续的标签切换逻辑
+    }
+    
+    // 其他标签的切换逻辑保持不变
     this.setData({
       activeTab: tab
-    })
+    });
+  },
+
+  // 点击轻音乐卡片跳转到详情页
+  onItemTap(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/detail/index?id=${id}`
+    });
+  },
+  
+  // 点击呼吸图标跳转到呼吸列表页
+  onBreathTap() {
+    wx.navigateTo({
+      url: '/pages/breath-list/index'
+    });
   }
 })

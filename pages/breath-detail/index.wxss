@@ -3,9 +3,11 @@
   height: 100vh;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* 背景图 */
 .bg-image {
   width: 100%;
   height: 100%;
@@ -15,119 +17,47 @@
   z-index: -1;
 }
 
-/* 遮罩层 */
-.mask {
+.breath-image {
+  width: 254px;
+  height: 254px;
+  margin-top: 186px;
+}
+
+.play-position {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #18193D;
-  opacity: 0.4;
-  z-index: 2;
+  bottom: 163px;
 }
 
-/* 上部蒙层 */
-.top-overlay {
+.timer {
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 77px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.progress-container {
+  position: absolute;
+  bottom: 58px;
+  width: 307px;
+}
+
+.progress-bg {
   width: 100%;
-  z-index: 3;
-  pointer-events: none;
+  height: 4px;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 
-/* 播放器 */
-.player {
-  position: fixed;
-  bottom: 27px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 335px;
-  height: 89px;
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
-  border-radius: 24px;
-  background: rgba(31, 43, 154, 0.24);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  z-index: 4;
-  padding: 14px 20px;
-  box-sizing: border-box;
-  
-  /* 添加模糊边框效果 */
-  box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.1);
-}
-
-.player-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.progress-active {
   height: 100%;
-}
-
-/* 左侧信息区域 */
-.info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-/* 标题区域 */
-.title-area {
-  display: flex;
-  align-items: center;
-}
-
-.icon-tag {
-  width: 70px;
-  height: 21px;
-  margin-right: 5px;
-}
-
-.title {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-/* 倒计时区域 */
-.timer-area {
-  display: flex;
-  align-items: center;
-}
-
-.icon-timer {
-  width: 19px;
-  height: 19px;
-  margin-right: 7px;
-}
-
-.time {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-/* 播放按钮 */
-.play-button {
-  width: 48px;
-  height: 52px;
-}
-
-.test-btn {
-  position: fixed;
-  bottom: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  z-index: 10;
-}
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+  transition: width 0.3s linear;
+} 
 
 /* 倒计时选择器样式 */
-.timer-sheet {
+.breath-sheet {
   width: 100vw;
   height: 508px;
   position: fixed;
@@ -135,15 +65,15 @@
   z-index: 9999;
 }
 
-.scrollable-time {
+.breath-scrollable-time {
   height: 100%;
   overflow: hidden;
   /* border-top: 2px solid rgba(255, 255, 255, 0.1); */
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
-  background: rgba(49, 59, 131, 0.24);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  background: rgba(120, 233, 184, 0.38);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
 }
 
 .bar {

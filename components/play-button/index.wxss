@@ -1,0 +1,33 @@
+.play-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play-button {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.play-icon {
+  width: 40%;
+  height: 40%;
+}
+
+.play-icon-adjust {
+  margin-left: 4px; /* 播放图标向右偏移 */
+}
+
+.pause-icon-size {
+  width: 36%; /* 暂停图标稍小一些 */
+  height: 36%;
+}
+
+.play-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+} 

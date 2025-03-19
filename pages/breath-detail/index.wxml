@@ -1,6 +1,57 @@
-<view>
-  <nav-bar title="呼吸详情" backgroundColor="transparent"></nav-bar>
-  <view class="container">
-    <text>呼吸详情页面开发中...</text>
+<view class="container" bindtap="hideTimerPicker">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/assets/images/breath-background.png" mode="aspectFill"></image>
+  <!-- 导航栏 -->
+  <nav-bar title="" backgroundColor="transparent"></nav-bar>
+  <!-- 呼吸图 -->
+  <image class="breath-image" src="/assets/images/breath.png" mode="aspectFit"></image>
+  <!-- 播放暂停按钮 -->
+  <view class="play-position" catchtap>
+    <play-button isPlaying="{{isPlaying}}" size="64" text="{{breathTitle}}" bind:toggle="togglePlay"></play-button>
   </view>
-</view> 
+  <!-- 倒计时 -->
+  <view class="timer" catchtap="showTimerPicker">
+    <text>{{formattedTime}}</text>
+  </view>
+  <!-- 进度条 -->
+  <view class="progress-container" catchtap>
+    <view class="progress-bg">
+      <view class="progress-active" style="width: {{progress}}%;"></view>
+    </view>
+  </view>
+</view>
+<draggable-sheet class="breath-sheet" style="height: {{sheetHeight}}px;" initial-child-size="{{initialSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" worklet:onsizeupdate="onSheetSizeUpdate">
+  <scroll-view associative-container="draggable-sheet" class="breath-scrollable-time" bounces="{{false}}" scroll-y type="custom" show-scrollbar="{{false}}">
+    <sticky-section>
+      <sticky-header>
+        <view class="bar">
+          <view class="indicator"></view>
+        </view>
+      </sticky-header>
+      <list-view>
+        <view class="picker-content">
+          <view class="picker-body">
+            <view class="unit-label">分钟</view>
+            <picker-view class="picker-view" value="{{[timerSelectedIndex]}}" bindchange="onTimerPickerChange" indicator-style="height: 50px; border-top: 1px solid rgba(255, 255, 255, 0.2); border-bottom: 1px solid rgba(255, 255, 255, 0.2);" mask-style="background-image: linear-gradient(to bottom, rgba(49, 59, 131, 0.9), rgba(49, 59, 131, 0.4) 40%, rgba(49, 59, 131, 0.4) 60%, rgba(49, 59, 131, 0.9));">
+              <picker-view-column>
+                <view wx:for="{{timerItems}}" wx:key="index" class="picker-item">
+                  <text>{{item}}</text>
+                </view>
+              </picker-view-column>
+            </picker-view>
+          </view>
+          <!-- 快捷设置部分 -->
+          <view class="quick-settings">
+            <view class="quick-title">快捷设置</view>
+            <view class="quick-options">
+              <view class="quick-option" bindtap="onTimerQuickSelect" data-value="5">5分钟</view>
+              <view class="quick-option" bindtap="onTimerQuickSelect" data-value="30">30分钟</view>
+              <view class="quick-option" bindtap="onTimerQuickSelect" data-value="60">60分钟</view>
+            </view>
+            <view class="save-button" bindtap="confirmTimer">保存</view>
+          </view>
+        </view>
+      </list-view>
+    </sticky-section>
+  </scroll-view>
+</draggable-sheet>

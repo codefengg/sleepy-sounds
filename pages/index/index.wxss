@@ -1,5 +1,4 @@
 .sheet {
-  width: 100%;
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -15,16 +14,17 @@
   flex-direction: column;
   padding: 0 16px;
   box-sizing: border-box;
-  /* 隐藏滚动条 */
-  -webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-    color: transparent;
-  }
   /* 兼容性写法 */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* 隐藏滚动条 */
+-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 
 .place-bg{
@@ -165,31 +165,25 @@
 }
 
 .main-tab-container {
+  margin-bottom: 16px;
 }
 
 /* 列表样式 */
 .content-list {
-  display: flex;
-  flex-wrap: wrap;
   margin-top: 16px;
+  padding: 0 16px;
 }
 
 .list-item {
-  /* 动态计算宽度：(屏幕宽度 - 32px padding - 26px 间距) / 3 */
-  width: calc((100% - 26px) / 3);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  margin-right: 13px;
 }
 
 .item-image {
   width: 100%;
   height: 120px;
-  /* 保持106:120的宽高比 */
-  /* aspect-ratio: 0.88; */
   border-radius: 12px;
 }
 
@@ -211,15 +205,6 @@
 .list-item:nth-child(3n) {
   margin-right: 0;
 }
-
-/* 处理不满一行时的对齐方式 */
-/* .list-item:nth-child(3n-2) {
-  margin-right: 13px;
-}
-
-.list-item:nth-child(3n-1) {
-  margin-right:13px;
-}  */
 
 /* 上部蒙层 */
 .top-overlay {
@@ -266,4 +251,43 @@
 .tab-item.active .text {
   color: #fff;
   font-weight: 500;
+}
+
+.grid-container {
+  margin-top: 16px;
+  padding: 0 16px;
+}
+
+.grid-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  width: calc((100% - 26px) / 3);
+  margin-right: 13px;
+  margin-bottom: 20px;
+}
+
+.grid-item:nth-child(3n) {
+  margin-right: 0;
+}
+
+/* 自定义 van-grid 样式 */
+.custom-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  padding: 0 16px !important;
+}
+
+.grid-item {
+  width: calc((100% - 26px) / 3) !important;
+  margin-right: 13px !important;
+  margin-bottom: 20px !important;
+  padding: 0 !important;
+  flex: none !important;
+}
+
+.grid-item:nth-child(3n) {
+  margin-right: 0 !important;
 }

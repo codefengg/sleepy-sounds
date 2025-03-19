@@ -1,0 +1,91 @@
+<view class="container" bindtap="hideTimerPicker">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/assets/images/detail-bg.png" mode="aspectFill"></image>
+
+  
+  <!-- 上部蒙层 -->
+  <image class="top-overlay" src="/assets/images/rectangle-top.png" mode="widthFix"></image>
+  
+  <!-- 播放器 -->
+  <view id="player" class="player" catchtap>
+    <view class="player-content">
+      <!-- 左侧信息 -->
+      <view class="info">
+        <!-- 标题区域 -->
+        <view class="title-area">
+          <image class="icon-tag" src="/assets/images/music.png" mode="aspectFit"></image>
+          <text class="title">{{title}}</text>
+        </view>
+        
+        <!-- 倒计时区域 -->
+        <view class="timer-area" bindtap="showTimerPicker">
+          <image class="icon-timer" src="/assets/images/time.png" mode="aspectFit"></image>
+          <text class="time">{{timeRemaining}}</text>
+        </view>
+      </view>
+      
+      <!-- 播放按钮 -->
+      <image class="play-button" src="/assets/images/player.png" mode="aspectFit" bindtap="onPlayPause"></image>
+    </view>
+  </view>
+</view>
+
+<draggable-sheet
+ class="timer-sheet"
+ style="height: {{sheetHeight}}px;"
+ initial-child-size="{{initialSize}}"
+ min-child-size="{{minSize}}"
+ max-child-size="{{maxSize}}"
+ snap="{{true}}"
+ worklet:onsizeupdate="onSheetSizeUpdate"
+>
+  <scroll-view
+   associative-container="draggable-sheet"
+   class="scrollable-time"
+   bounces="{{false}}"
+   scroll-y
+   type="custom"
+   show-scrollbar="{{false}}"
+  >
+    <sticky-section>
+      <sticky-header>
+        <view class="bar">
+          <view class="indicator"></view>
+        </view>
+      </sticky-header>
+      <list-view>
+        <view class="picker-content">
+          <view class="picker-body">
+            <view class="unit-label">分钟</view>
+            
+            <picker-view 
+              class="picker-view" 
+              value="{{[timerSelectedIndex]}}" 
+              bindchange="onTimerPickerChange"
+              indicator-style="height: 50px; border-top: 1px solid rgba(255, 255, 255, 0.2); border-bottom: 1px solid rgba(255, 255, 255, 0.2);"
+              mask-style="background-image: linear-gradient(to bottom, rgba(49, 59, 131, 0.9), rgba(49, 59, 131, 0.4) 40%, rgba(49, 59, 131, 0.4) 60%, rgba(49, 59, 131, 0.9));">
+              <picker-view-column>
+                <view wx:for="{{timerItems}}" wx:key="index" class="picker-item">
+                  <text>{{item}}</text>
+                </view>
+              </picker-view-column>
+            </picker-view>
+          </view>
+          
+          <!-- 快捷设置部分 -->
+          <view class="quick-settings">
+            <view class="quick-title">快捷设置</view>
+            
+            <view class="quick-options">
+              <view class="quick-option" bindtap="onTimerQuickSelect" data-value="5">5分钟</view>
+              <view class="quick-option" bindtap="onTimerQuickSelect" data-value="30">30分钟</view>
+              <view class="quick-option" bindtap="onTimerQuickSelect" data-value="60">60分钟</view>
+            </view>
+            
+            <view class="save-button" bindtap="confirmTimer">保存</view>
+          </view>
+        </view>
+      </list-view>
+    </sticky-section>
+  </scroll-view>
+</draggable-sheet> 

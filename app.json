@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/detail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,10 +15,10 @@
   "lazyCodeLoading": "requiredComponents",
   "componentFramework": "glass-easel",
   "rendererOptions": {
-      "skyline": {
-        "defaultDisplayBlock": true,
-        "defaultContentBox": true,
-        "disableABTest": true
-      }
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "defaultContentBox": true,
+      "disableABTest": true
+    }
   }
 } 

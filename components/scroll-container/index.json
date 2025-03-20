@@ -1,5 +1,6 @@
 {
   "component": true,
   "usingComponents": {
+    "indicator-bar": "../indicator-bar/index"
   }
 } 

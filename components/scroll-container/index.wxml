@@ -1,0 +1,24 @@
+<scroll-view 
+  associative-container="draggable-sheet" 
+  class="scrollable drawer-content {{enableBlur ? 'with-blur' : ''}}" 
+  style="background-color: {{backgroundColor}};"
+  scroll-y 
+  type="custom" 
+  show-scrollbar="{{false}}"
+>
+  <sticky-section>
+    <sticky-header>
+      <!-- 指示器 -->
+      <indicator-bar wx:if="{{showIndicator}}"></indicator-bar>
+      
+      <!-- 头部插槽 -->
+      <slot name="header"></slot>
+    </sticky-header>
+    
+    <!-- 内容插槽 -->
+    <slot></slot>
+  </sticky-section>
+  
+  <!-- 底部间距 -->
+  <view style="height: {{bottomSpace}}px;"></view>
+</scroll-view> 

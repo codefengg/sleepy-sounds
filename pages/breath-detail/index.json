@@ -2,6 +2,8 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "nav-bar": "../../components/nav-bar/index",
-    "play-button": "../../components/play-button/index"
-  }
+    "play-button": "../../components/play-button/index",
+    "scroll-container": "../../components/scroll-container/index"
+  },
+  "disableScroll": true
 } 

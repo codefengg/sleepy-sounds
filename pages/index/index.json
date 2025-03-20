@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "tab-nav": "../../components/tab-nav/index",
-    "van-grid": "@vant/weapp/grid/index",
-    "van-grid-item": "@vant/weapp/grid-item/index"
+    "indicator-bar": "../../components/indicator-bar/index",
+    "scroll-container": "../../components/scroll-container/index"
   }
 }

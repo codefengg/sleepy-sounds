@@ -33,31 +33,28 @@
 <draggable-sheet class="sheet" style="height: {{sheetHeight}}px;" initial-child-size="{{minSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" snap-sizes="{{snapSizes}}" worklet:onsizeupdate="onSizeUpdate">
   <!-- 下部蒙层放在这里 -->
   <image class="bottom-overlay-inner" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
-  <scroll-view associative-container="draggable-sheet" class="scrollable drawer-content" scroll-y type="custom" show-scrollbar="{{false}}">
-    <sticky-section>
-      <sticky-header>
-        <view class="bar">
-          <view class="indicator" />
-        </view>
-        <!-- tab部分 -->
-        <view class="main-tab-container">
-          <tab-nav 
-            currentTab="{{currentTab}}" 
-            tabIcons="{{tabIcons}}"
-            bind:change="onTabChange"
-          ></tab-nav>
-        </view>
-      </sticky-header>
-      <!-- 列表 -->
-      <view class="grid-list">
-        <view class="grid-item" wx:for="{{12}}" wx:key="index">
-          <view class="list-item" bindtap="onItemTap" data-id="{{index + 1}}">
-            <image class="item-image" src="/assets/images/video-bg.png" mode="aspectFill"></image>
-            <text class="item-text">轻音乐{{index + 1}}</text>
-          </view>
+  
+  <scroll-container 
+    backgroundColor="rgba(49, 59, 131, 0.24)" 
+    enableBlur="{{true}}"
+  >
+    <!-- 头部插槽内容 -->
+    <view slot="header" class="main-tab-container">
+      <tab-nav 
+        currentTab="{{currentTab}}" 
+        tabIcons="{{tabIcons}}"
+        bind:change="onTabChange"
+      ></tab-nav>
+    </view>
+    
+    <!-- 默认插槽内容 -->
+    <view class="grid-list">
+      <view class="grid-item" wx:for="{{12}}" wx:key="index">
+        <view class="list-item" bindtap="onItemTap" data-id="{{index + 1}}">
+          <image class="item-image" src="/assets/images/video-bg.png" mode="aspectFill"></image>
+          <text class="item-text">轻音乐{{index + 1}}</text>
         </view>
       </view>
-    </sticky-section>
-    <view style="height: 94px;"></view>
-  </scroll-view>
+    </view>
+  </scroll-container>
 </draggable-sheet>

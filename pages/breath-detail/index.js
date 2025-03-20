@@ -12,7 +12,7 @@ Page({
     timerMinValue: 5,
     timerMaxValue: 120,
     timerStep: 5,
-    sheetHeight: 508,
+    sheetHeight: 465,
     initialSize: 0,
     minSize: 0,
     maxSize: 1,

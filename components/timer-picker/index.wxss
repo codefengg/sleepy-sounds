@@ -1,0 +1,72 @@
+.picker-content {
+  padding: 20px;
+}
+
+.picker-body {
+  position: relative;
+  height: 200px;
+  margin-bottom: 30px;
+}
+
+.unit-label {
+  position: absolute;
+  right: 30%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 16px;
+  z-index: 10;
+}
+
+.picker-view {
+  width: 100%;
+  height: 200px;
+}
+
+.picker-item {
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.quick-settings {
+  margin-top: 20px;
+}
+
+.quick-title {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 16px;
+}
+
+.quick-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.quick-option {
+  width: 30%;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+}
+
+.save-button {
+  width: 100%;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+} 

@@ -18,7 +18,4 @@
     <!-- 内容插槽 -->
     <slot></slot>
   </sticky-section>
-  
-  <!-- 底部间距 -->
-  <view style="height: {{bottomSpace}}px;"></view>
 </scroll-view> 

@@ -25,29 +25,12 @@
     backgroundColor="rgba(120, 233, 184, 0.38)" 
     enableBlur="{{true}}"
   >
-    <list-view>
-      <view class="picker-content">
-        <view class="picker-body">
-          <view class="unit-label">分钟</view>
-          <picker-view class="picker-view" value="{{[timerSelectedIndex]}}" bindchange="onTimerPickerChange" indicator-style="height: 50px; border-top: 1px solid rgba(255, 255, 255, 0.2); border-bottom: 1px solid rgba(255, 255, 255, 0.2);" mask-style="background-image: linear-gradient(to bottom, rgba(49, 59, 131, 0.9), rgba(49, 59, 131, 0.4) 40%, rgba(49, 59, 131, 0.4) 60%, rgba(49, 59, 131, 0.9));">
-            <picker-view-column>
-              <view wx:for="{{timerItems}}" wx:key="index" class="picker-item">
-                <text>{{item}}</text>
-              </view>
-            </picker-view-column>
-          </picker-view>
-        </view>
-        <!-- 快捷设置部分 -->
-        <view class="quick-settings">
-          <view class="quick-title">快捷设置</view>
-          <view class="quick-options">
-            <view class="quick-option" bindtap="onTimerQuickSelect" data-value="5">5分钟</view>
-            <view class="quick-option" bindtap="onTimerQuickSelect" data-value="30">30分钟</view>
-            <view class="quick-option" bindtap="onTimerQuickSelect" data-value="60">60分钟</view>
-          </view>
-          <view class="save-button" bindtap="confirmTimer">保存</view>
-        </view>
-      </view>
-    </list-view>
+    <timer-picker
+      value="{{timerValue}}"
+      timerItems="{{timerItems}}"
+      bind:change="onTimerChange"
+      bind:quickselect="onTimerQuickSelect"
+      bind:save="confirmTimer"
+    ></timer-picker>
   </scroll-container>
 </draggable-sheet>

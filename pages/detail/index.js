@@ -4,13 +4,13 @@ Page({
   data: {
     title: "小雨声",
     timeRemaining: "26:24",
-    timerValue: 30, // 默认30分钟
+    timerValue: 0, // 当前选中的时间值（分钟）
     timerItems: [],
     timerSelectedIndex: 0,
     timerMinValue: 5,
     timerMaxValue: 120,
     timerStep: 5,
-    sheetHeight: 508,
+    sheetHeight: 465,
     initialSize: 0,
     minSize: 0,
     maxSize: 1,
@@ -111,34 +111,28 @@ Page({
   },
 
   // picker-view 变化事件
-  onTimerPickerChange(e) {
-    const timerSelectedIndex = e.detail.value[0];
-    this.setData({ timerSelectedIndex });
+  onTimerChange(e) {
+    const value = e.detail.value;
+    this.setData({
+      timerValue: value
+    });
   },
 
   // 确认选择
-  confirmTimer() {
-    const timerValue = this.data.timerItems[this.data.timerSelectedIndex];
-    console.log('确认选择:', timerValue, '分钟');
+  confirmTimer(e) {
+    const value = e.detail.value || this.data.timerValue;
+    // 设置倒计时逻辑
+    // ...
     
-    // 这里可以添加你的业务逻辑，例如设置倒计时
+    // 隐藏选择器
+    this.hideTimerPicker();
   },
 
   // 快捷选择
   onTimerQuickSelect(e) {
-    const value = parseInt(e.currentTarget.dataset.value);
-    
-    // 找到对应的索引
-    const { timerItems } = this.data;
-    let timerSelectedIndex = 0;
-    
-    for (let i = 0; i < timerItems.length; i++) {
-      if (timerItems[i] === value) {
-        timerSelectedIndex = i;
-        break;
-      }
-    }
-    
-    this.setData({ timerSelectedIndex });
+    const value = e.detail.value;
+    this.setData({
+      timerValue: value
+    });
   },
 }) 

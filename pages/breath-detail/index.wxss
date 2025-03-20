@@ -59,7 +59,7 @@
 /* 倒计时选择器样式 */
 .breath-sheet {
   width: 100vw;
-  height: 508px;
+  height: 465px;
   position: fixed;
   bottom: 0;
   z-index: 9999;

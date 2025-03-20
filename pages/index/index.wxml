@@ -56,5 +56,7 @@
         </view>
       </view>
     </view>
+    <!-- 底部间距 -->
+    <view style="height: 84px;"></view>
   </scroll-container>
 </draggable-sheet>

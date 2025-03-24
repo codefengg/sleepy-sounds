@@ -125,6 +125,7 @@
   bottom: 7px;
   left: 50%;
   transform: translateX(-50%);
+  border-radius: 50%;
 }
 
 .list-content{

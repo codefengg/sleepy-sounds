@@ -22,7 +22,19 @@ Page({
     currentTabId: '', // 使用ID而不是索引
     activeTab: 'sleep', // 默认助眠为激活状态，可选值: 'sleep', 'breathe',
     tabIcons: [null, null, '/assets/images/mie.png'], // 第三个标签有图标
-    gridList: [] // 存储网格列表数据
+    gridList: [], // 存储网格列表数据
+    // 默认UI数据
+    defaultUI: {
+      title: '夜深了',
+      subtitle: '来一曲美妙的音乐吧 good night！',
+      bgImage: '/assets/images/bg.png',
+      pressImage: '/assets/images/press.png'
+    },
+    // 当前显示的UI数据
+    title: '夜深了',
+    subtitle: '来一曲美妙的音乐吧 good night！',
+    bgImage: '/assets/images/bg.png',
+    pressImage: '/assets/images/press.png'
   },
 
   onSizeUpdate(e) {
@@ -99,14 +111,39 @@ Page({
     });
   },
 
-  // 点击音乐项跳转到详情页
+  // 点击音乐项
   onItemTap(e) {
-    const id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: `/pages/detail/index?id=${id}`
+    const { id } = e.currentTarget.dataset;
+    const music = this.data.gridList.find(item => item._id === id);
+    
+    if (!music) return;
+
+    console.log(music);
+    
+    // 更新UI数据
+    this.setData({
+      title: music.title || this.data.defaultUI.title,
+      subtitle: music.subtitle || this.data.defaultUI.subtitle,
+      bgImage: music.backgroundUrl || this.data.defaultUI.bgImage,
+      pressImage: music.iconUrl || this.data.defaultUI.pressImage
     });
+
+    // 跳转到详情页
+    // wx.navigateTo({
+    //   url: `/pages/detail/index?id=${id}`
+    // });
   },
   
+  // 重置UI为默认状态
+  resetUI() {
+    this.setData({
+      title: this.data.defaultUI.title,
+      subtitle: this.data.defaultUI.subtitle,
+      bgImage: this.data.defaultUI.bgImage,
+      pressImage: this.data.defaultUI.pressImage
+    });
+  },
+
   // 点击呼吸图标跳转到呼吸列表页
   onBreathTap() {
     wx.navigateTo({

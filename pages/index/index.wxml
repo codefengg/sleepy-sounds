@@ -1,6 +1,6 @@
 <view class="container">
   <!-- 背景图 -->
-  <image class="bg-image" src="/assets/images/bg.png" mode="aspectFill"></image>
+  <image class="bg-image" src="{{bgImage}}" mode="aspectFill"></image>
   <!-- 遮罩层 -->
   <view class="mask"></view>
   <!-- 上部蒙层 -->
@@ -10,9 +10,9 @@
   <!-- 内容区域 -->
   <view class="content">
     <!-- 标题 -->
-    <view class="title">夜深了</view>
+    <view class="title">{{title}}</view>
     <!-- 副标题 -->
-    <view class="subtitle">来一曲美妙的音乐吧 good night！</view>
+    <view class="subtitle">{{subtitle}}</view>
   </view>
   <!-- 自定义tabbar -->
   <view class="tabbar">
@@ -22,7 +22,7 @@
       <text class="text">助眠</text>
     </view>
     <!-- 中间 -->
-    <image class="press-icon" src="/assets/images/press.png" mode="aspectFit"></image>
+    <image class="press-icon" src="{{pressImage}}" mode="aspectFit"></image>
     <!-- 右侧 -->
     <view class="tab-item right {{activeTab === 'breathe' ? 'active' : ''}}" bindtap="switchTab" data-tab="breathe">
       <image class="icon" src="/assets/images/{{activeTab === 'breathe' ? 'breathe-on' : 'breathe'}}.png" mode="aspectFit"></image>

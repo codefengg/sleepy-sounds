@@ -2,29 +2,29 @@
   <!-- 主tab -->
   <view class="tab-list">
     <view 
-      wx:for="{{tabs}}" 
-      wx:key="index"
-      class="tab-item {{currentTab === index ? 'active' : ''}}" 
+      wx:for="{{mainCategories}}" 
+      wx:key="_id"
+      class="tab-item {{currentMainId === item._id ? 'active' : ''}}" 
       bindtap="switchTab" 
+      data-id="{{item._id}}"
       data-index="{{index}}"
       id="tab-{{index}}"
     >
-      <image wx:if="{{tabIcons[index]}}" class="tab-icon" src="{{tabIcons[index]}}" mode="aspectFit"></image>
-      <text class="tab-text">{{item}}</text>
+      <text class="tab-text">{{item.name}}</text>
     </view>
     <view class="tab-line" style="left: {{lineLeft}}px; opacity: {{lineOpacity}}"></view>
   </view>
 
   <!-- 副tab -->
-  <view class="sub-tab-list">
+  <view class="sub-tab-list" wx:if="{{subCategories[currentMainId] && subCategories[currentMainId].length > 0}}">
     <view 
-      wx:for="{{subTabs[currentTab]}}" 
-      wx:key="index"
-      class="sub-tab-item {{currentSubTab === index ? 'active' : ''}}"
+      wx:for="{{subCategories[currentMainId]}}" 
+      wx:key="_id"
+      class="sub-tab-item {{currentSubId === item._id ? 'active' : ''}}"
       bindtap="switchSubTab"
-      data-index="{{index}}"
+      data-id="{{item._id}}"
     >
-      {{item}}
+      {{item.name}}
     </view>
   </view>
 </view> 

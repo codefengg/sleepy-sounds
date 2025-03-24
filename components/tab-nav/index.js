@@ -1,36 +1,24 @@
 Component({
   properties: {
-    tabs: {
-      type: Array,
-      value: []
-    },
-    tabIcons: {
-      type: Array,
-      value: [null, null, null] // 第三个标签有图标
-    },
-    currentTab: {
-      type: Number,
-      value: 0
+    currentTabId: {
+      type: String,
+      value: ''
     }
   },
 
   data: {
+    mainCategories: [], // 一级分类
+    subCategories: {}, // 二级分类映射
+    currentMainId: '', // 当前选中的一级分类ID
+    currentSubId: '', // 当前选中的二级分类ID
     lineLeft: 0,
-    lineOpacity: 0,
-    currentSubTab: 0,
-    // 每个主tab对应的副tab数据
-    subTabs: []
+    lineOpacity: 0
   },
 
   lifetimes: {
     attached() {
       // 获取分类数据
       this.fetchCategories();
-    },
-    
-    ready() {
-      // 组件完全初始化后，计算初始位置
-      this.setLinePosition(this.data.currentTab)
     }
   },
 
@@ -39,103 +27,119 @@ Component({
     fetchCategories() {
       wx.cloud.callFunction({
         name: 'categoryManager',
-        data: {
-          action: 'get'
-        }
+        data: { action: 'get' }
       })
       .then(res => {
         if (res.result && res.result.success) {
-          this.processCategories(res.result.data);
-        } else {
-          console.error('获取分类失败:', res);
+          const categories = res.result.data;
+          
+          // 分离一级和二级分类
+          const mainCategories = categories.filter(item => !item.parentId)
+            .sort((a, b) => a.order - b.order);
+          
+          // 构建二级分类映射
+          const subCategories = {};
+          categories.filter(item => item.parentId).forEach(item => {
+            if (!subCategories[item.parentId]) {
+              subCategories[item.parentId] = [];
+            }
+            subCategories[item.parentId].push(item);
+          });
+          
+          // 排序二级分类
+          Object.keys(subCategories).forEach(key => {
+            subCategories[key].sort((a, b) => a.order - b.order);
+          });
+          
+          this.setData({ mainCategories, subCategories });
+          
+          // 默认选中第一个一级分类
+          if (mainCategories.length > 0) {
+            const firstMainId = mainCategories[0]._id;
+            let firstSubId = '';
+            
+            // 如果有二级分类，默认选中第一个
+            if (subCategories[firstMainId] && subCategories[firstMainId].length > 0) {
+              firstSubId = subCategories[firstMainId][0]._id;
+            }
+            
+            // 设置选中状态
+            this.setData({
+              currentMainId: firstMainId,
+              currentSubId: firstSubId
+            });
+            
+            // 设置线条位置
+            setTimeout(() => {
+              this.setLinePosition(0);
+            }, 100);
+            
+            // 触发事件
+            this.triggerEvent('categoryChange', {
+              categoryId: firstSubId || firstMainId,
+              mainCategoryId: firstMainId,
+              subCategoryId: firstSubId
+            });
+          }
         }
-      })
-      .catch(err => {
-        console.error('调用云函数失败:', err);
       });
     },
-
-    // 处理分类数据
-    processCategories(categories) {
-      // 区分一级分类和二级分类
-      const mainCategories = categories.filter(item => !item.parentId)
-        .sort((a, b) => a.order - b.order);
-      
-      // 提取一级分类名称
-      const tabs = mainCategories.map(item => item.name);
-      
-      // 为每个一级分类准备图标
-      const tabIcons = mainCategories.map(item => 
-        item._id === "f5d5a75067dd059500488a0429172332" ? '/assets/images/mie.png' : null
-      );
-      
-      // 为每个一级分类找到对应的二级分类
-      const subTabsMap = {};
-      mainCategories.forEach(main => {
-        // 找到当前一级分类下的所有二级分类
-        const subs = categories.filter(item => item.parentId === main._id)
-          .sort((a, b) => a.order - b.order);
-        
-        // 保存二级分类名称
-        subTabsMap[main._id] = subs.map(item => item.name);
-      });
-      
-      // 构建二维数组，与tabs顺序对应
-      const subTabs = mainCategories.map(main => subTabsMap[main._id] || []);
-      
-      // 更新组件数据
-      this.setData({
-        tabs,
-        tabIcons,
-        subTabs
-      });
-      
-      // 重新计算线条位置
-      setTimeout(() => {
-        this.setLinePosition(this.data.currentTab);
-      }, 100);
-    },
-
+    
+    // 设置线条位置
     setLinePosition(index) {
-      const query = this.createSelectorQuery().in(this)
+      const query = this.createSelectorQuery().in(this);
       query.select(`#tab-${index}`).boundingClientRect(rect => {
         if (rect) {
-          // 计算线条位置：tab的中心点减去线条一半宽度
-          const lineLeft = rect.left + (rect.width) / 2 - 15 - 16
+          const lineLeft = rect.left + rect.width / 2 - 15 - 16;
           this.setData({
             lineLeft,
             lineOpacity: 1
-          })
+          });
         }
-      }).exec()
+      }).exec();
     },
-
+    
+    // 切换主分类
     switchTab(e) {
-      const index = e.currentTarget.dataset.index
-      if (index === this.data.currentTab) return
+      const index = e.currentTarget.dataset.index;
+      const id = e.currentTarget.dataset.id;
       
-      this.setLinePosition(index)
-      this.setData({ currentSubTab: 0 }) // 切换主tab时重置副tab
-      this.triggerEvent('change', { index, subIndex: 0 })
+      if (id === this.data.currentMainId) return;
+      
+      // 获取该主分类下的子分类
+      const subs = this.data.subCategories[id] || [];
+      const subId = subs.length > 0 ? subs[0]._id : '';
+      
+      this.setData({
+        currentMainId: id,
+        currentSubId: subId
+      });
+      
+      // 设置线条位置
+      this.setLinePosition(index);
+      
+      // 触发事件
+      this.triggerEvent('categoryChange', {
+        categoryId: subId || id,
+        mainCategoryId: id,
+        subCategoryId: subId
+      });
     },
-
+    
+    // 切换子分类
     switchSubTab(e) {
-      const subIndex = e.currentTarget.dataset.index
-      if (subIndex === this.data.currentSubTab) return
-
-      this.setData({ currentSubTab: subIndex })
-      this.triggerEvent('change', { 
-        index: this.data.currentTab, 
-        subIndex 
-      })
-    }
-  },
-
-  observers: {
-    'currentTab': function(newIndex, oldIndex) {
-      if (typeof oldIndex !== 'undefined' && newIndex !== oldIndex) {
-        this.setLinePosition(newIndex)
-      }
+      const subId = e.currentTarget.dataset.id;
+      
+      if (subId === this.data.currentSubId) return;
+      
+      this.setData({ currentSubId: subId });
+      
+      // 触发事件
+      this.triggerEvent('categoryChange', {
+        categoryId: subId,
+        mainCategoryId: this.data.currentMainId,
+        subCategoryId: subId
+      });
     }
   }
-}) 
+}); 

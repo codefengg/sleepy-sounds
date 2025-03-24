@@ -41,9 +41,9 @@
     <!-- 头部插槽内容 -->
     <view slot="header" class="main-tab-container">
       <tab-nav 
-        currentTab="{{currentTab}}" 
-        tabIcons="{{tabIcons}}"
-        bind:change="onTabChange"
+        id="tab-nav"
+        currentTabId="{{currentTabId}}"
+        bind:categoryChange="onCategoryChange"
       ></tab-nav>
     </view>
     

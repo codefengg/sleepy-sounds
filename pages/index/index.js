@@ -16,9 +16,10 @@ Page({
     maxSize: 1,
     snapSizes: [],
     middleSize,
-    currentTab: 0,
+    currentTabId: '', // 使用ID而不是索引
     activeTab: 'sleep', // 默认助眠为激活状态，可选值: 'sleep', 'breathe',
-    tabIcons: [null, null, '/assets/images/mie.png'] // 第三个标签有图标
+    tabIcons: [null, null, '/assets/images/mie.png'], // 第三个标签有图标
+    gridList: [] // 存储网格列表数据
   },
 
   onSizeUpdate(e) {
@@ -30,12 +31,67 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    // 页面加载时不需要立即获取音乐列表
+    // 等待tab-nav组件加载分类数据并触发categoryChange事件
   },
 
-  onTabChange(e) {
+  // 处理分类变化事件
+  onCategoryChange(e) {
+    const { categoryId, mainCategoryId, subCategoryId } = e.detail;
+    
+    // 更新当前选中的tab ID
     this.setData({
-      currentTab: e.detail.index
+      currentTabId: categoryId  // 直接使用categoryId，因为组件已经处理好了优先级
+    });
+    
+    // 获取对应分类的音乐列表
+    this.fetchMusicList(categoryId);
+  },
+  
+  // 获取音乐列表
+  fetchMusicList(categoryId) {
+    if (!categoryId) {
+      console.error('分类ID不能为空');
+      return;
+    }
+    
+    // 调用云函数获取音乐列表
+    wx.cloud.callFunction({
+      name: 'musicManager',
+      data: {
+        action: 'get',
+        categoryId: categoryId
+      }
     })
+    .then(res => {
+      if (res.result && res.result.success) {
+        // 更新网格列表数据
+        const musicList = res.result.data;
+        
+        this.setData({
+          gridList: musicList.map(item => ({
+            id: item._id,
+            image: item.listImageUrl || '/assets/images/video-bg.png',
+            text: item.title
+          }))
+        });
+        
+        console.log('获取音乐列表成功:', musicList);
+      } else {
+        console.error('获取音乐列表失败:', res.result);
+        wx.showToast({
+          title: '获取音乐列表失败',
+          icon: 'none'
+        });
+      }
+    })
+    .catch(err => {
+      console.error('调用云函数失败:', err);
+      wx.showToast({
+        title: '网络错误',
+        icon: 'none'
+      });
+    });
   },
 
   // 切换底部标签页
@@ -56,7 +112,7 @@ Page({
     });
   },
 
-  // 点击轻音乐卡片跳转到详情页
+  // 点击音乐项跳转到详情页
   onItemTap(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({

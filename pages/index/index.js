@@ -40,12 +40,17 @@ Page({
 
   // 处理分类变化事件
   onCategoryChange(e) {
-    const { categoryId, mainCategoryId, subCategoryId } = e.detail;
+    const { categoryId, mainCategoryId, subCategoryId, isDefaultData, isRealData } = e.detail;
     
     // 更新当前选中的tab ID
     this.setData({
-      currentTabId: categoryId  // 直接使用categoryId，因为组件已经处理好了优先级
+      currentTabId: categoryId
     });
+    
+    // 如果是默认数据，不请求音乐列表
+    if (isDefaultData) {
+      return;
+    }
     
     // 获取对应分类的音乐列表
     this.fetchMusicList(categoryId);

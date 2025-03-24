@@ -49,10 +49,10 @@
     
     <!-- 默认插槽内容 -->
     <view class="grid-list">
-      <view class="grid-item" wx:for="{{12}}" wx:key="index">
-        <view class="list-item" bindtap="onItemTap" data-id="{{index + 1}}">
-          <image class="item-image" src="/assets/images/video-bg.png" mode="aspectFill"></image>
-          <text class="item-text">轻音乐{{index + 1}}</text>
+      <view class="grid-item" wx:for="{{gridList}}" wx:key="{{item._id}}">
+        <view class="list-item" bindtap="onItemTap" data-id="{{item._id}}">
+          <image class="item-image" src="{{item.listImageUrl}}" mode="aspectFill"></image>
+          <text class="item-text">{{item.title}}</text>
         </view>
       </view>
     </view>

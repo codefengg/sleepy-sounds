@@ -4,6 +4,9 @@ const sheetHeight = windowHeight - (menuRect.bottom + menuRect.height + 60)
 
 const middleSize = 0.6
 
+// 导入云函数助手
+const cloudHelper = require('../../utils/cloudHelper');
+
 Page({
 
   /**
@@ -55,13 +58,9 @@ Page({
       return;
     }
     
-    // 调用云函数获取音乐列表
-    wx.cloud.callFunction({
-      name: 'musicManager',
-      data: {
-        action: 'get',
-        categoryId: categoryId
-      }
+    cloudHelper.callFunction('musicManager', {
+      action: 'get',
+      categoryId: categoryId
     })
     .then(res => {
       if (res.result && res.result.success) {
@@ -69,28 +68,11 @@ Page({
         const musicList = res.result.data;
         
         this.setData({
-          gridList: musicList.map(item => ({
-            id: item._id,
-            image: item.listImageUrl || '/assets/images/video-bg.png',
-            text: item.title
-          }))
-        });
-        
-        console.log('获取音乐列表成功:', musicList);
-      } else {
-        console.error('获取音乐列表失败:', res.result);
-        wx.showToast({
-          title: '获取音乐列表失败',
-          icon: 'none'
+          gridList: musicList || []
         });
       }
     })
-    .catch(err => {
-      console.error('调用云函数失败:', err);
-      wx.showToast({
-        title: '网络错误',
-        icon: 'none'
-      });
+    .catch(() => {
     });
   },
 

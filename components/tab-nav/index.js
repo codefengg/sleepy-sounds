@@ -1,3 +1,6 @@
+// 导入云函数助手
+const cloudHelper = require('../../utils/cloudHelper');
+
 Component({
   properties: {
     currentTabId: {
@@ -25,64 +28,61 @@ Component({
   methods: {
     // 获取分类数据
     fetchCategories() {
-      wx.cloud.callFunction({
-        name: 'categoryManager',
-        data: { action: 'get' }
-      })
-      .then(res => {
-        if (res.result && res.result.success) {
-          const categories = res.result.data;
-          
-          // 分离一级和二级分类
-          const mainCategories = categories.filter(item => !item.parentId)
-            .sort((a, b) => a.order - b.order);
-          
-          // 构建二级分类映射
-          const subCategories = {};
-          categories.filter(item => item.parentId).forEach(item => {
-            if (!subCategories[item.parentId]) {
-              subCategories[item.parentId] = [];
-            }
-            subCategories[item.parentId].push(item);
-          });
-          
-          // 排序二级分类
-          Object.keys(subCategories).forEach(key => {
-            subCategories[key].sort((a, b) => a.order - b.order);
-          });
-          
-          this.setData({ mainCategories, subCategories });
-          
-          // 默认选中第一个一级分类
-          if (mainCategories.length > 0) {
-            const firstMainId = mainCategories[0]._id;
-            let firstSubId = '';
+      cloudHelper.callFunction('categoryManager', { action: 'get' })
+        .then(res => {
+          if (res.result && res.result.success) {
+            const categories = res.result.data;
             
-            // 如果有二级分类，默认选中第一个
-            if (subCategories[firstMainId] && subCategories[firstMainId].length > 0) {
-              firstSubId = subCategories[firstMainId][0]._id;
-            }
+            // 分离一级和二级分类
+            const mainCategories = categories.filter(item => !item.parentId)
+              .sort((a, b) => a.order - b.order);
             
-            // 设置选中状态
-            this.setData({
-              currentMainId: firstMainId,
-              currentSubId: firstSubId
+            // 构建二级分类映射
+            const subCategories = {};
+            categories.filter(item => item.parentId).forEach(item => {
+              if (!subCategories[item.parentId]) {
+                subCategories[item.parentId] = [];
+              }
+              subCategories[item.parentId].push(item);
             });
             
-            // 设置线条位置
-            setTimeout(() => {
-              this.setLinePosition(0);
-            }, 100);
-            
-            // 触发事件
-            this.triggerEvent('categoryChange', {
-              categoryId: firstSubId || firstMainId,
-              mainCategoryId: firstMainId,
-              subCategoryId: firstSubId
+            // 排序二级分类
+            Object.keys(subCategories).forEach(key => {
+              subCategories[key].sort((a, b) => a.order - b.order);
             });
+            
+            this.setData({ mainCategories, subCategories });
+            
+            // 默认选中第一个一级分类
+            if (mainCategories.length > 0) {
+              const firstMainId = mainCategories[0]._id;
+              let firstSubId = '';
+              
+              // 如果有二级分类，默认选中第一个
+              if (subCategories[firstMainId] && subCategories[firstMainId].length > 0) {
+                firstSubId = subCategories[firstMainId][0]._id;
+              }
+              
+              // 设置选中状态
+              this.setData({
+                currentMainId: firstMainId,
+                currentSubId: firstSubId
+              });
+              
+              // 设置线条位置
+              setTimeout(() => {
+                this.setLinePosition(0);
+              }, 100);
+              
+              // 触发事件
+              this.triggerEvent('categoryChange', {
+                categoryId: firstSubId || firstMainId,
+                mainCategoryId: firstMainId,
+                subCategoryId: firstSubId
+              });
+            }
           }
-        }
-      });
+        });
     },
     
     // 设置线条位置

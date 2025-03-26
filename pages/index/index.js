@@ -36,7 +36,8 @@ Page({
     title: '夜深了',
     subtitle: '来一曲美妙的音乐吧 good night！',
     bgImage: '/assets/images/bg.png',
-    pressImage: '/assets/images/press.png'
+    pressImage: '/assets/images/press.png',
+    isPlaying: false
   },
 
   onSizeUpdate(e) {
@@ -52,6 +53,10 @@ Page({
     // 等待tab-nav组件加载分类数据并触发categoryChange事件
     // 监听音频状态变化
     app.onAudioStateChange(this.handleAudioStateChange);
+    
+    // 初始化时获取当前状态
+    const { isPlaying } = app.globalData.audioState;
+    this.setData({ isPlaying });
   },
 
   // 处理分类变化事件
@@ -117,13 +122,14 @@ Page({
 
   // 处理音频状态变化
   handleAudioStateChange(state) {
-    const { currentMusic } = state;
+    const { currentMusic, isPlaying } = state;
     if (currentMusic) {
       this.setData({
         title: currentMusic.title,
         subtitle: currentMusic.subtitle,
         bgImage: currentMusic.backgroundUrl,
-        pressImage: currentMusic.iconUrl
+        pressImage: currentMusic.iconUrl,
+        isPlaying
       });
     }
   },

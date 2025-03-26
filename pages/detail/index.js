@@ -3,7 +3,6 @@ const app = getApp();
 
 Page({
   data: {
-    timeRemaining: "26:24",
     timerValue: 0, // 当前选中的时间值（分钟）
     timerItems: [],
     timerSelectedIndex: 0,
@@ -15,46 +14,74 @@ Page({
     minSize: 0,
     maxSize: 1,
     // 音乐相关信息
-    currentMusic: null,
-    bgImage: '/assets/images/bg.png',  // 默认背景图
-    title: ''
+    bgImage: '/assets/images/bg.png',
+    title: '',
+    isPlaying: false,
+    timeRemaining: '05:00' // 格式化后的剩余时间
   },
 
-  onLoad(options) {
-    // 直接从全局状态获取当前音乐信息
-    const { currentMusic } = app.globalData.audioState;
-    if (currentMusic) {
-      this.setData({
-        bgImage: currentMusic.backgroundUrl,
-        title: currentMusic.name
-      });
-    }
-
-    // 注册监听器，以便后续状态变化时更新
+  onLoad() {
+    // 注册监听器
     app.onAudioStateChange(this.handleAudioStateChange);
     
+    // 初始化时获取当前状态
+    const { currentMusic, isPlaying, remainingTime, defaultDuration } = app.globalData.audioState;
+    
+    // 设置默认选中的时间值（分钟）
+    const defaultMinutes = Math.floor(defaultDuration / 60);
+    
+    this.setData({
+      bgImage: currentMusic?.backgroundUrl || '/assets/images/bg.png',
+      title: currentMusic?.name || '',
+      isPlaying: isPlaying,
+      timeRemaining: this.formatTime(remainingTime),
+      timerValue: defaultMinutes
+    });
+
     this.generateTimerItems();
     this.getTimerSheetContext();
   },
 
   onUnload() {
-    // 移除监听器
     app.offAudioStateChange(this.handleAudioStateChange);
   },
 
   handleAudioStateChange(state) {
-    const { currentMusic } = state;
+    const { currentMusic, isPlaying, remainingTime } = state;
     if (currentMusic) {
       this.setData({
         bgImage: currentMusic.backgroundUrl,
-        title: currentMusic.name
+        title: currentMusic.name,
+        isPlaying,
+        timeRemaining: this.formatTime(remainingTime)
       });
     }
   },
 
-  // 播放/暂停按钮点击事件
-  onPlayPause() {
-    // 播放/暂停逻辑
+  // 格式化时间
+  formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  },
+
+  // 播放/暂停切换
+  togglePlay() {
+    if (this.data.isPlaying) {
+      app.pauseMusic();
+    } else {
+      app.resumeMusic();
+    }
+  },
+
+  // 确认选择时间
+  confirmTimer(e) {
+    const value = e.detail.value || this.data.timerValue;
+    // 设置新的默认播放时长
+    app.setDefaultDuration(value);
+    
+    // 隐藏选择器
+    this.hideTimerPicker();
   },
 
   // 获取 draggable-sheet 上下文
@@ -146,16 +173,6 @@ Page({
     this.setData({
       timerValue: value
     });
-  },
-
-  // 确认选择
-  confirmTimer(e) {
-    const value = e.detail.value || this.data.timerValue;
-    // 设置倒计时逻辑
-    // ...
-    
-    // 隐藏选择器
-    this.hideTimerPicker();
   },
 
   // 快捷选择

@@ -118,7 +118,7 @@
   position: relative;
 }
 
- .press-icon {
+.press-icon {
   width: 64px;
   height: 64px;
   position: absolute;
@@ -126,6 +126,11 @@
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50%;
+}
+
+.press-icon.rotating {
+  animation: rotate 8s linear infinite;
+  will-change: transform;
 }
 
 .list-content{
@@ -258,4 +263,13 @@
 
 .grid-item:nth-child(3n) {
   margin-right: 0 !important;
+}
+
+@keyframes rotate {
+  from {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
 }

@@ -22,7 +22,7 @@
       <text class="text">助眠</text>
     </view>
     <!-- 中间 -->
-    <image class="press-icon" src="{{pressImage}}" mode="aspectFit"></image>
+    <image class="press-icon {{isPlaying ? 'rotating' : ''}}" src="{{pressImage}}" mode="aspectFit"></image>
     <!-- 右侧 -->
     <view class="tab-item right {{activeTab === 'breathe' ? 'active' : ''}}" bindtap="switchTab" data-tab="breathe">
       <image class="icon" src="/assets/images/{{activeTab === 'breathe' ? 'breathe-on' : 'breathe'}}.png" mode="aspectFit"></image>

@@ -3,8 +3,8 @@ App({
     audioState: {
       currentMusic: null,  // 当前选中的音乐信息
       isPlaying: false,    // 播放状态（后续用）
-      duration: 5 * 60, // 默认播放5分钟
-      remainingTime: 5 * 60 // 剩余时间
+      defaultDuration: 5 * 60,  // 默认时长（秒）
+      remainingTime: 0         // 实际剩余时间（秒）
     },
     backgroundAudioManager: null,
     timer: null // 用于倒计时
@@ -103,18 +103,34 @@ App({
   },
 
   // 播放音乐
-  playMusic(music, duration) {
+  playMusic(music) {
     const audioManager = this.globalData.backgroundAudioManager;
+    const currentState = this.globalData.audioState;
     
-    // 设置播放时长（分钟）
-    const playDuration = duration || 5; // 默认5分钟
+    // 检查是否是同一首音乐
+    if (currentState.currentMusic && currentState.currentMusic.id === music._id) {
+      // 同一首音乐，不需要重新播放，只更新状态
+      this.setAudioState({
+        currentMusic: {
+          ...music,
+          id: music._id
+        }
+      });
+      return;
+    }
+    
+    // 不同音乐，需要重新播放
+    // 使用全局默认时长
+    const { defaultDuration } = currentState;
     
     // 更新状态
     this.setAudioState({
-      currentMusic: music,
+      currentMusic: {
+        ...music,
+        id: music._id
+      },
       isPlaying: true,
-      duration: playDuration * 60,
-      remainingTime: playDuration * 60
+      remainingTime: defaultDuration  // 新音乐使用默认时长
     });
     
     // 设置音频信息
@@ -148,22 +164,35 @@ App({
     }, 1000);
   },
 
-  // 设置播放时长
-  setDuration(minutes) {
+  // 设置默认播放时长
+  setDefaultDuration(minutes) {
+    const seconds = minutes * 60;
     this.setAudioState({
-      duration: minutes * 60,
-      remainingTime: minutes * 60
+      defaultDuration: seconds,
+      // 如果当前正在播放，也更新剩余时间
+      ...(this.globalData.audioState.isPlaying ? { remainingTime: seconds } : {})
     });
   },
 
   // 暂停播放
   pauseMusic() {
     this.globalData.backgroundAudioManager.pause();
+    // 暂停时清除定时器，但保留剩余时间
+    if (this.globalData.timer) {
+      clearInterval(this.globalData.timer);
+      this.globalData.timer = null;
+    }
+    this.setAudioState({ isPlaying: false });
   },
 
   // 继续播放
   resumeMusic() {
-    this.globalData.backgroundAudioManager.play();
+    // 如果有剩余时间才继续播放
+    if (this.globalData.audioState.remainingTime > 0) {
+      this.globalData.backgroundAudioManager.play();
+      this.startTimer(); // 重新启动定时器
+      this.setAudioState({ isPlaying: true });
+    }
   },
 
   // 停止播放

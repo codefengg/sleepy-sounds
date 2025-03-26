@@ -1,8 +1,8 @@
 const { shared } = wx.worklet
+const app = getApp();
 
 Page({
   data: {
-    title: "小雨声",
     timeRemaining: "26:24",
     timerValue: 0, // 当前选中的时间值（分钟）
     timerItems: [],
@@ -14,12 +14,42 @@ Page({
     initialSize: 0,
     minSize: 0,
     maxSize: 1,
+    // 音乐相关信息
+    currentMusic: null,
+    bgImage: '/assets/images/bg.png',  // 默认背景图
+    title: ''
   },
 
   onLoad(options) {
-    // 可以从options中获取传递的参数
+    // 直接从全局状态获取当前音乐信息
+    const { currentMusic } = app.globalData.audioState;
+    if (currentMusic) {
+      this.setData({
+        bgImage: currentMusic.backgroundUrl,
+        title: currentMusic.name
+      });
+    }
+
+    // 注册监听器，以便后续状态变化时更新
+    app.onAudioStateChange(this.handleAudioStateChange);
+    
     this.generateTimerItems();
     this.getTimerSheetContext();
+  },
+
+  onUnload() {
+    // 移除监听器
+    app.offAudioStateChange(this.handleAudioStateChange);
+  },
+
+  handleAudioStateChange(state) {
+    const { currentMusic } = state;
+    if (currentMusic) {
+      this.setData({
+        bgImage: currentMusic.backgroundUrl,
+        title: currentMusic.name
+      });
+    }
   },
 
   // 播放/暂停按钮点击事件

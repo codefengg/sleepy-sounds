@@ -1,9 +1,9 @@
 <view class="container" bindtap="hideTimerPicker">
   <!-- 背景图 -->
-  <image class="bg-image" src="/assets/images/detail-bg.png" mode="aspectFill"></image>
+  <image class="bg-image" src="{{bgImage}}" mode="aspectFill"></image>
   
   <!-- 导航栏 -->
-  <nav-bar title="" backgroundColor="transparent"></nav-bar>
+  <nav-bar title="{{title}}" backgroundColor="transparent"></nav-bar>
 
   
   <!-- 上部蒙层 -->

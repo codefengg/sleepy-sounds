@@ -7,6 +7,8 @@ const middleSize = 0.6
 // 导入云函数助手
 const cloudHelper = require('../../utils/cloudHelper');
 
+const app = getApp();
+
 Page({
 
   /**
@@ -48,6 +50,8 @@ Page({
   onLoad(options) {
     // 页面加载时不需要立即获取音乐列表
     // 等待tab-nav组件加载分类数据并触发categoryChange事件
+    // 监听音频状态变化
+    app.onAudioStateChange(this.handleAudioStateChange);
   },
 
   // 处理分类变化事件
@@ -111,27 +115,33 @@ Page({
     });
   },
 
+  // 处理音频状态变化
+  handleAudioStateChange(state) {
+    const { currentMusic } = state;
+    if (currentMusic) {
+      this.setData({
+        title: currentMusic.title,
+        subtitle: currentMusic.subtitle,
+        bgImage: currentMusic.backgroundUrl,
+        pressImage: currentMusic.iconUrl
+      });
+    }
+  },
+
   // 点击音乐项
   onItemTap(e) {
     const { id } = e.currentTarget.dataset;
     const music = this.data.gridList.find(item => item._id === id);
     
     if (!music) return;
-
-    console.log(music);
     
-    // 更新UI数据
-    this.setData({
-      title: music.title || this.data.defaultUI.title,
-      subtitle: music.subtitle || this.data.defaultUI.subtitle,
-      bgImage: music.backgroundUrl || this.data.defaultUI.bgImage,
-      pressImage: music.iconUrl || this.data.defaultUI.pressImage
-    });
+    // 保存到全局状态
+    app.setCurrentMusic(music);
 
     // 跳转到详情页
-    // wx.navigateTo({
-    //   url: `/pages/detail/index?id=${id}`
-    // });
+    wx.navigateTo({
+      url: `/pages/detail/index?id=${id}`
+    });
   },
   
   // 重置UI为默认状态

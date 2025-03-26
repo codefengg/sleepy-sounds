@@ -29,6 +29,7 @@ Component({
 
   methods: {
     onBack() {
+      console.log('onBack')
       if (this.properties.showBack) {
         wx.navigateBack({
           fail: () => {

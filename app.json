@@ -11,6 +11,7 @@
     "navigationBarTitleText": "Sleepy Sounds",
     "navigationBarTextStyle": "black"
   },
+  "requiredBackgroundModes": ["audio"],
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "renderer": "skyline",

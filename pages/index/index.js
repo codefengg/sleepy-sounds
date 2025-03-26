@@ -135,8 +135,8 @@ Page({
     
     if (!music) return;
     
-    // 保存到全局状态
-    app.setCurrentMusic(music);
+    // 播放音乐
+    app.playMusic(music);
 
     // 跳转到详情页
     wx.navigateTo({

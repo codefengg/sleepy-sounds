@@ -37,7 +37,10 @@ Page({
     subtitle: '来一曲美妙的音乐吧 good night！',
     bgImage: '/assets/images/bg.png',
     pressImage: '/assets/images/press.png',
-    isPlaying: false
+    isPlaying: false,
+    currentMusic: null,
+    rotationAngle: 0,
+    rotationTimer: null
   },
 
   onSizeUpdate(e) {
@@ -55,8 +58,21 @@ Page({
     app.onAudioStateChange(this.handleAudioStateChange);
     
     // 初始化时获取当前状态
-    const { isPlaying } = app.globalData.audioState;
-    this.setData({ isPlaying });
+    const { isPlaying, currentMusic } = app.globalData.audioState;
+    this.setData({ 
+      isPlaying,
+      currentMusic
+    });
+    
+    // 初始化旋转角度
+    this.startRotation();
+  },
+
+  onUnload() {
+    // 清除定时器
+    if (this.data.rotationTimer) {
+      clearInterval(this.data.rotationTimer);
+    }
   },
 
   // 处理分类变化事件
@@ -123,14 +139,47 @@ Page({
   // 处理音频状态变化
   handleAudioStateChange(state) {
     const { currentMusic, isPlaying } = state;
-    if (currentMusic) {
-      this.setData({
-        title: currentMusic.title,
-        subtitle: currentMusic.subtitle,
-        bgImage: currentMusic.backgroundUrl,
-        pressImage: currentMusic.iconUrl,
-        isPlaying
-      });
+    this.setData({
+      title: currentMusic?.title || this.data.defaultUI.title,
+      subtitle: currentMusic?.subtitle || this.data.defaultUI.subtitle,
+      bgImage: currentMusic?.backgroundUrl || this.data.defaultUI.bgImage,
+      pressImage: currentMusic?.iconUrl || this.data.defaultUI.pressImage,
+      isPlaying,
+      currentMusic
+    });
+    
+    // 根据播放状态控制旋转
+    if (isPlaying) {
+      this.startRotation();
+    } else {
+      this.pauseRotation();
+    }
+  },
+
+  // 开始旋转
+  startRotation() {
+    // 如果已经有定时器，先清除
+    if (this.data.rotationTimer) {
+      clearInterval(this.data.rotationTimer);
+    }
+    
+    // 创建新的定时器
+    const timer = setInterval(() => {
+      if (this.data.isPlaying && this.data.currentMusic) {
+        this.setData({
+          rotationAngle: (this.data.rotationAngle + 1) % 360
+        });
+      }
+    }, 50); // 每50毫秒旋转1度
+    
+    this.setData({ rotationTimer: timer });
+  },
+
+  // 暂停旋转
+  pauseRotation() {
+    if (this.data.rotationTimer) {
+      clearInterval(this.data.rotationTimer);
+      this.setData({ rotationTimer: null });
     }
   },
 
@@ -165,5 +214,14 @@ Page({
     wx.navigateTo({
       url: '/pages/breath-list/index'
     });
+  },
+
+  // 播放/暂停切换
+  togglePlay() {
+    if (this.data.isPlaying) {
+      app.pauseMusic();
+    } else {
+      app.resumeMusic();
+    }
   }
 })

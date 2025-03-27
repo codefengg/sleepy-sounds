@@ -118,19 +118,38 @@
   position: relative;
 }
 
-.press-icon {
-  width: 64px;
-  height: 64px;
+.press-container {
   position: absolute;
   bottom: 7px;
   left: 50%;
   transform: translateX(-50%);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.press-icon {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
+}
+
+.play-pause-btn {
+  position: absolute;
+  width: 27px;
+  height: 20px;
+}
+.play-pause-btn.playing {
+  width: 20px;
+  height: 14px;
 }
 
 .press-icon.rotating {
   animation: rotate 8s linear infinite;
   will-change: transform;
+  animation-play-state: var(--animation-state, paused);
 }
 
 .list-content{
@@ -267,9 +286,9 @@
 
 @keyframes rotate {
   from {
-    transform: translateX(-50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: translateX(-50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }

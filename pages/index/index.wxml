@@ -22,7 +22,22 @@
       <text class="text">助眠</text>
     </view>
     <!-- 中间 -->
-    <image class="press-icon {{isPlaying ? 'rotating' : ''}}" src="{{pressImage}}" mode="aspectFit"></image>
+    <view class="press-container">
+      <image 
+        class="press-icon" 
+        style="transform: rotate({{rotationAngle}}deg);" 
+        src="{{pressImage}}" 
+        mode="aspectFit"
+      ></image>
+      <!-- 只有当前有音乐时才显示播放/暂停按钮 -->
+      <image 
+        wx:if="{{currentMusic}}"
+        class="play-pause-btn {{isPlaying ? 'playing' : ''}}" 
+        src="/assets/images/{{isPlaying ? 'playing' : 'pausing'}}.png" 
+        mode="aspectFit"
+        catchtap="togglePlay"
+      ></image>
+    </view>
     <!-- 右侧 -->
     <view class="tab-item right {{activeTab === 'breathe' ? 'active' : ''}}" bindtap="switchTab" data-tab="breathe">
       <image class="icon" src="/assets/images/{{activeTab === 'breathe' ? 'breathe-on' : 'breathe'}}.png" mode="aspectFit"></image>

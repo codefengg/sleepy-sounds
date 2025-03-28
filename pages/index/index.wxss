@@ -313,35 +313,26 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: ripple 2s linear infinite;
-}
-
-.ripple-1 {
   width: 80px;
   height: 80px;
-  animation-delay: 0s;
-}
-
-.ripple-2 {
-  width: 100px;
-  height: 100px;
-  animation-delay: 0.5s;
-}
-
-.ripple-3 {
-  width: 120px;
-  height: 120px;
-  animation-delay: 1s;
+  animation: ripple 2.5s cubic-bezier(0.1, 0.42, 0.85, 1) infinite;
+  opacity: 0;
 }
 
 @keyframes ripple {
   0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  60% {
+    opacity: 0.3;
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1.2);
   }
 }
 

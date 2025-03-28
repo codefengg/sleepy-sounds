@@ -16,6 +16,8 @@
     </sticky-header>
     
     <!-- 内容插槽 -->
-    <slot></slot>
+     <div style="padding: 0 16px;">
+        <slot></slot>
+     </div>
   </sticky-section>
 </scroll-view> 

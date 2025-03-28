@@ -22,10 +22,10 @@
       <text class="text">助眠</text>
     </view>
     <!-- 中间 -->
-    <view class="press-container">
+    <view class="press-container" catchtap="togglePlay">
       <image class="press-icon" style="transform: rotate({{rotationAngle}}deg);" src="{{pressImage}}" mode="aspectFit"></image>
       <!-- 只有当前有音乐时才显示播放/暂停按钮 -->
-      <image wx:if="{{currentMusic}}" class="play-pause-btn {{isPlaying ? 'playing' : ''}}" src="/assets/images/{{isPlaying ? 'playing' : 'pausing'}}.png" mode="aspectFit" catchtap="togglePlay"></image>
+      <image wx:if="{{currentMusic}}" class="play-pause-btn {{isPlaying ? 'playing' : ''}}" src="/assets/images/{{isPlaying ? 'playing' : 'pausing'}}.png" mode="aspectFit"></image>
     </view>
     <!-- 右侧 -->
     <view class="tab-item right {{activeTab === 'breathe' ? 'active' : ''}}" bindtap="switchTab" data-tab="breathe">

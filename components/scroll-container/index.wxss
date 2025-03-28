@@ -5,7 +5,7 @@
   border-top-right-radius: 24px;
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
+  /* padding: 0 16px; */
   box-sizing: border-box;
   /* 兼容性写法 */
   scrollbar-width: none; /* Firefox */

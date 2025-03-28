@@ -48,7 +48,7 @@ async function getCategories(event) {
 
 // 添加分类
 async function addCategory(event) {
-  const { name, parentId, order } = event
+  const { name, parentId, order, iconUrl } = event
   
   // 输入验证
   if (!name || name.trim() === '') {
@@ -93,6 +93,7 @@ async function addCategory(event) {
     const newCategory = {
       name: name.trim(),
       order: orderValue,
+      iconUrl: iconUrl || '',
       createTime: db.serverDate()
     }
     
@@ -122,7 +123,7 @@ async function addCategory(event) {
 
 // 更新分类
 async function updateCategory(event) {
-  const { id, name, parentId, order } = event
+  const { id, name, parentId, order, iconUrl } = event
   
   // 验证ID是否存在
   if (!id) {
@@ -133,7 +134,7 @@ async function updateCategory(event) {
   }
   
   // 验证至少有一个要更新的字段
-  if (!name && parentId === undefined && order === undefined) {
+  if (!name && parentId === undefined && order === undefined && iconUrl === undefined) {
     return {
       success: false,
       error: '至少需要提供一个要更新的字段'
@@ -197,6 +198,10 @@ async function updateCategory(event) {
     
     if (name !== undefined && name.trim() !== '') {
       updateData.name = name.trim()
+    }
+    
+    if (iconUrl !== undefined) {
+      updateData.iconUrl = iconUrl
     }
     
     if (parentId !== undefined) {

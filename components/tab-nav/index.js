@@ -142,7 +142,7 @@ Component({
       const query = this.createSelectorQuery().in(this);
       query.select(`#tab-${index}`).boundingClientRect(rect => {
         if (rect) {
-          const lineLeft = rect.left + rect.width / 2 - 15 - 16;
+          const lineLeft = rect.left + (rect.width) / 2 - 15 - 16;
           this.setData({
             lineLeft,
             lineOpacity: 1

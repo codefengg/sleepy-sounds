@@ -10,6 +10,12 @@
       data-index="{{index}}"
       id="tab-{{index}}"
     >
+      <image 
+        wx:if="{{item.iconUrl}}" 
+        class="tab-icon" 
+        src="{{item.iconUrl}}" 
+        mode="aspectFit"
+      ></image>
       <text class="tab-text">{{item.name}}</text>
     </view>
     <view class="tab-line" style="left: {{lineLeft}}px; opacity: {{lineOpacity}}"></view>

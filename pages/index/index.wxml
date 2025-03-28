@@ -23,20 +23,9 @@
     </view>
     <!-- 中间 -->
     <view class="press-container">
-      <image 
-        class="press-icon" 
-        style="transform: rotate({{rotationAngle}}deg);" 
-        src="{{pressImage}}" 
-        mode="aspectFit"
-      ></image>
+      <image class="press-icon" style="transform: rotate({{rotationAngle}}deg);" src="{{pressImage}}" mode="aspectFit"></image>
       <!-- 只有当前有音乐时才显示播放/暂停按钮 -->
-      <image 
-        wx:if="{{currentMusic}}"
-        class="play-pause-btn {{isPlaying ? 'playing' : ''}}" 
-        src="/assets/images/{{isPlaying ? 'playing' : 'pausing'}}.png" 
-        mode="aspectFit"
-        catchtap="togglePlay"
-      ></image>
+      <image wx:if="{{currentMusic}}" class="play-pause-btn {{isPlaying ? 'playing' : ''}}" src="/assets/images/{{isPlaying ? 'playing' : 'pausing'}}.png" mode="aspectFit" catchtap="togglePlay"></image>
     </view>
     <!-- 右侧 -->
     <view class="tab-item right {{activeTab === 'breathe' ? 'active' : ''}}" bindtap="switchTab" data-tab="breathe">
@@ -48,25 +37,18 @@
 <draggable-sheet class="sheet" style="height: {{sheetHeight}}px;" initial-child-size="{{minSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" snap-sizes="{{snapSizes}}" worklet:onsizeupdate="onSizeUpdate">
   <!-- 下部蒙层放在这里 -->
   <image class="bottom-overlay-inner" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
-  
-  <scroll-container 
-    backgroundColor="rgba(49, 59, 131, 0.24)" 
-    enableBlur="{{true}}"
-  >
+  <scroll-container backgroundColor="rgba(49, 59, 131, 0.24)" enableBlur="{{true}}">
     <!-- 头部插槽内容 -->
     <view slot="header" class="main-tab-container">
-      <tab-nav 
-        id="tab-nav"
-        currentTabId="{{currentTabId}}"
-        bind:categoryChange="onCategoryChange"
-      ></tab-nav>
+      <tab-nav id="tab-nav" currentTabId="{{currentTabId}}" bind:categoryChange="onCategoryChange"></tab-nav>
     </view>
-    
     <!-- 默认插槽内容 -->
     <view class="grid-list">
       <view class="grid-item" wx:for="{{gridList}}" wx:key="{{item._id}}">
-        <view class="list-item" bindtap="onItemTap" data-id="{{item._id}}">
-          <image class="item-image" src="{{item.listImageUrl}}" mode="aspectFill"></image>
+        <view class="list-item">
+          <open-container closed-elevation="2" closed-border-radius="12" open-elevation="8" open-border-radius="0" transition-type="fade" transition-duration="400" middle-color="#18193D" closed-color="transparent" open-color="transparent" bind:tap="onItemTap" data-id="{{item._id}}" style="width: 100%; background-color: transparent;">
+            <image class="item-image" src="{{item.listImageUrl}}" mode="scaleToFill"></image>
+          </open-container>
           <text class="item-text">{{item.title}}</text>
         </view>
       </view>

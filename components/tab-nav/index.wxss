@@ -9,14 +9,17 @@
   color: rgba(255, 255, 255, 0.7);
   margin-right: 24px;
   padding: 12px 0 18px 0;
-  transition: all 0.3s;
+  transition: all 0.3s ease-out;
   display: flex;
   align-items: flex-end; /* 底部对齐 */
+  position: relative;
+  overflow: hidden;
 }
 
 .tab-item.active {
   color: #ffffff;
   font-weight: 500;
+  transform: scale(1.05);
 }
 
 .tab-line {
@@ -24,9 +27,10 @@
   bottom: 10px;
   width: 30px;
   height: 4px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
-  transition: left 0.3s;
+  transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
 }
 
 .tab-icon {

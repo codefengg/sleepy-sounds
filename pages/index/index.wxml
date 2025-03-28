@@ -24,6 +24,12 @@
     <!-- 中间 -->
     <view class="press-container" catchtap="togglePlay">
       <image class="press-icon" style="transform: rotate({{rotationAngle}}deg);" src="{{pressImage}}" mode="aspectFit"></image>
+      <!-- 添加波纹动画效果 -->
+      <view class="ripple-container" wx:if="{{isPlaying}}">
+        <view class="ripple ripple-1"></view>
+        <view class="ripple ripple-2"></view>
+        <view class="ripple ripple-3"></view>
+      </view>
       <!-- 只有当前有音乐时才显示播放/暂停按钮 -->
       <image wx:if="{{currentMusic}}" class="play-pause-btn {{isPlaying ? 'playing' : ''}}" src="/assets/images/{{isPlaying ? 'playing' : 'pausing'}}.png" mode="aspectFit"></image>
     </view>
@@ -44,7 +50,11 @@
     </view>
     <!-- 默认插槽内容 -->
     <view class="grid-list">
-      <view class="grid-item" wx:for="{{gridList}}" wx:key="{{item._id}}">
+      <view wx:if="{{gridList.length === 0}}" class="empty-state">
+        <image class="empty-icon" src="/assets/images/empty.png" mode="aspectFit"></image>
+        <text class="empty-text">暂无内容</text>
+      </view>
+      <view class="grid-item" wx:for="{{gridList}}" wx:key="{{item._id}}" style="animation-delay: {{index * 0.05}}s">
         <view class="list-item">
           <open-container closed-elevation="2" closed-border-radius="12" open-elevation="8" open-border-radius="0" transition-type="fade" transition-duration="400" middle-color="#18193D" closed-color="transparent" open-color="transparent" bind:tap="onItemTap" data-id="{{item._id}}" style="width: 100%; background-color: transparent;">
             <image class="item-image" src="{{item.listImageUrl}}" mode="scaleToFill"></image>

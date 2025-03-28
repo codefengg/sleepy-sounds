@@ -40,7 +40,9 @@ Page({
     isPlaying: false,
     currentMusic: null,
     rotationAngle: 0,
-    rotationTimer: null
+    rotationTimer: null,
+    allMusicList: [], // 存储所有音乐数据
+    currentCategoryId: '', // 当前选中的分类ID
   },
 
   onSizeUpdate(e) {
@@ -52,8 +54,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // 页面加载时不需要立即获取音乐列表
-    // 等待tab-nav组件加载分类数据并触发categoryChange事件
     // 监听音频状态变化
     app.onAudioStateChange(this.handleAudioStateChange);
     
@@ -66,6 +66,30 @@ Page({
     
     // 初始化旋转角度
     this.startRotation();
+    
+    // 从本地缓存加载音乐数据（如果有）
+    const cachedMusic = wx.getStorageSync('allMusicCache');
+    if (cachedMusic && cachedMusic.timestamp) {
+      // 检查缓存是否在24小时内
+      const now = new Date().getTime();
+      const cacheTime = cachedMusic.timestamp;
+      
+      // 如果缓存不超过24小时，直接使用缓存数据
+      if (now - cacheTime < 24 * 60 * 60 * 1000) {
+        this.setData({
+          allMusicList: cachedMusic.data
+        });
+        
+        // 仍然在后台更新数据，但不阻塞UI
+        this.updateMusicInBackground();
+      } else {
+        // 缓存过期，获取新数据
+        this.getAllMusic();
+      }
+    } else {
+      // 没有缓存，获取新数据
+      this.getAllMusic();
+    }
   },
 
   onUnload() {
@@ -81,40 +105,47 @@ Page({
     
     // 更新当前选中的tab ID
     this.setData({
-      currentTabId: categoryId
+      currentTabId: categoryId,
+      currentCategoryId: categoryId
     });
     
-    // 如果是默认数据，不请求音乐列表
-    if (isDefaultData) {
+    // 如果已经获取了所有音乐，直接过滤
+    if (this.data.allMusicList.length > 0) {
+      this.filterMusicByCategory(categoryId);
       return;
     }
-    
-    // 获取对应分类的音乐列表
-    this.fetchMusicList(categoryId);
   },
   
   // 获取音乐列表
   fetchMusicList(categoryId) {
-    if (!categoryId) {
-      console.error('分类ID不能为空');
+    // 如果已经有所有音乐数据，直接过滤
+    if (this.data.allMusicList.length > 0) {
+      this.filterMusicByCategory(categoryId);
       return;
     }
     
     cloudHelper.callFunction('musicManager', {
       action: 'get',
-      categoryId: categoryId
-    })
-    .then(res => {
-      if (res.result && res.result.success) {
-        // 更新网格列表数据
-        const musicList = res.result.data;
-        
+      categoryId
+    }).then(res => {
+      if (res.success) {
         this.setData({
-          gridList: musicList || []
+          gridList: res.data
+        });
+      } else {
+        wx.showToast({
+          title: '获取音乐失败',
+          icon: 'none'
         });
       }
-    })
-    .catch(() => {
+      wx.hideLoading();
+    }).catch(err => {
+      console.error('获取音乐失败', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: '获取音乐失败',
+        icon: 'none'
+      });
     });
   },
 
@@ -223,5 +254,82 @@ Page({
     } else {
       app.resumeMusic();
     }
-  }
+  },
+
+  // 获取所有音乐数据
+  getAllMusic: function() {
+    
+    // 调用云函数获取所有音乐
+    cloudHelper.callFunction('musicManager', {
+      action: 'getAll'
+    }).then(res => {
+      if (res.result.success) {
+        this.setData({
+          allMusicList: res.result.data
+        });
+        
+        // 缓存数据
+        wx.setStorageSync('allMusicCache', {
+          data: res.result.data,
+          timestamp: new Date().getTime()
+        });
+        
+        // 如果已经选择了分类，则过滤数据
+        if (this.data.currentCategoryId) {
+          this.filterMusicByCategory(this.data.currentCategoryId);
+        }
+      } else {
+      }
+    }).catch(err => {
+      console.error('获取音乐失败', err);
+    });
+  },
+  
+  // 根据分类ID过滤音乐
+  filterMusicByCategory: function(categoryId) {
+    const filteredList = this.data.allMusicList.filter(item => 
+      item.categoryId === categoryId
+    );
+    
+    this.setData({
+      gridList: filteredList
+    });
+  },
+
+  // 获取音乐列表
+  getMusicList(categoryId) {
+    if (!categoryId) {
+      console.error('分类ID不能为空');
+      return;
+    }
+    
+    this.fetchMusicList(categoryId);
+  },
+
+  // 在后台更新音乐数据
+  updateMusicInBackground: function() {
+    cloudHelper.callFunction('musicManager', {
+      action: 'getAll'
+    }).then(res => {
+      if (res.success) {
+        // 更新数据和缓存
+        this.setData({
+          allMusicList: res.data
+        });
+        
+        // 缓存数据
+        wx.setStorageSync('allMusicCache', {
+          data: res.data,
+          timestamp: new Date().getTime()
+        });
+        
+        // 如果当前有选中的分类，重新过滤
+        if (this.data.currentCategoryId) {
+          this.filterMusicByCategory(this.data.currentCategoryId);
+        }
+      }
+    }).catch(err => {
+      console.error('后台更新音乐失败', err);
+    });
+  },
 })

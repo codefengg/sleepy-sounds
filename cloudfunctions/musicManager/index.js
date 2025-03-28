@@ -12,7 +12,11 @@ exports.main = async (event, context) => {
   // 根据action参数执行不同操作
   switch (action) {
     case 'get':
-      return getMusic(event)
+      return getMusicList(event)
+    case 'getAll':
+      return getAllMusic()
+    case 'getById':
+      return getMusicById(event)
     case 'add':
       return addMusic(event)
     case 'update':
@@ -24,6 +28,54 @@ exports.main = async (event, context) => {
         success: false,
         error: '未知的操作类型'
       }
+  }
+}
+
+// 获取音乐列表
+async function getMusicList(event) {
+  const { categoryId } = event
+  
+  try {
+    let query = db.collection('audios').orderBy('order', 'asc')
+    
+    // 如果有分类ID，则按分类筛选
+    if (categoryId) {
+      query = query.where({
+        categoryId: categoryId
+      })
+    }
+    
+    const result = await query.get()
+    
+    return {
+      success: true,
+      data: result.data
+    }
+  } catch (err) {
+    return {
+      success: false,
+      error: err.message || '获取音乐列表失败'
+    }
+  }
+}
+
+// 获取所有音乐
+async function getAllMusic() {
+  try {
+    // 直接获取所有音乐（因为数据不超过100条）
+    const result = await db.collection('audios')
+      .orderBy('order', 'asc')
+      .get();
+    
+    return {
+      success: true,
+      data: result.data
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: err.message || '获取所有音乐失败'
+    };
   }
 }
 

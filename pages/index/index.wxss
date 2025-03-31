@@ -75,7 +75,7 @@
 
 .tabbar {
   position: fixed;
-  bottom: 16px;
+  bottom: env(safe-area-inset-bottom, 24px);
   left: 50%;
   transform: translateX(-50%);
   width: 343px;

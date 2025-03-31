@@ -1,8 +1,8 @@
 .scrollable {
   height: 100%;
   overflow: hidden;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  border-top-left-radius: 48rpx;
+  border-top-right-radius: 48rpx;
   display: flex;
   flex-direction: column;
   /* padding: 0 16px; */
@@ -12,16 +12,16 @@
   -ms-overflow-style: none; /* IE and Edge */
   position: relative;
   /* box-shadow: 0 -2px 0 rgba(255, 255, 255, 0.1); */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
-  width: calc(100% + 4px);
-  margin: 0 -2px 0 -2px;
+  border: 4rpx solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 -16rpx 48rpx rgba(0, 0, 0, 0.1);
+  width: calc(100% + 8rpx);
+  margin: 0 -4rpx 0 -4rpx;
   transition: all 0.3s ease;
 }
 
 .with-blur {
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
 }
 
 /* 隐藏滚动条 */

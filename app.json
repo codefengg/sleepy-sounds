@@ -9,7 +9,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Sleepy Sounds",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "requiredBackgroundModes": ["audio"],
   "style": "v2",

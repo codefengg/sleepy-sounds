@@ -17,14 +17,14 @@
   height: 100%;
   display: flex;
   align-items: center;
-  width: 87px;
-  height: 32px;
-  padding-left: 16px;
+  width: 174rpx;
+  height: 64rpx;
+  padding-left: 32rpx;
 }
 
 .back-icon {
-  width: 9px;
-  height: 17px;
+  width: 18rpx;
+  height: 34rpx;
 }
 
 .title {
@@ -32,12 +32,12 @@
   left: 0;
   right: 0;
   text-align: center;
-  font-size: 17px;
+  font-size: 34rpx;
   font-weight: 500;
 }
 
 .fallback-icon {
-  font-size: 24px;
+  font-size: 48rpx;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@
 }
 
 .back-text {
-  font-size: 24px;
+  font-size: 48rpx;
   color: #ffffff;
   font-weight: bold;
 } 

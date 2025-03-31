@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 28rpx;
 }
 
 .play-icon {
@@ -19,7 +19,7 @@
 }
 
 .play-icon-adjust {
-  margin-left: 4px; /* 播放图标向右偏移 */
+  margin-left: 8rpx; /* 播放图标向右偏移 */
 }
 
 .pause-icon-size {
@@ -28,6 +28,6 @@
 }
 
 .play-text {
-  font-size: 14px;
+  font-size: 28rpx;
   color: rgba(255, 255, 255, 0.8);
 } 

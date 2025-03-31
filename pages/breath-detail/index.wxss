@@ -18,33 +18,33 @@
 }
 
 .breath-image {
-  width: 254px;
-  height: 254px;
-  margin-top: 186px;
+  width: 508rpx;
+  height: 508rpx;
+  margin-top: 372rpx;
 }
 
 .play-position {
   position: absolute;
-  bottom: 163px;
+  bottom: 326rpx;
 }
 
 .timer {
   position: absolute;
-  bottom: 77px;
-  font-size: 14px;
+  bottom: 154rpx;
+  font-size: 28rpx;
   color: #ffffff;
 }
 
 .progress-container {
   position: absolute;
-  bottom: 58px;
-  width: 307px;
+  bottom: 116rpx;
+  width: 614rpx;
 }
 
 .progress-bg {
   width: 100%;
-  height: 4px;
-  border-radius: 2px;
+  height: 8rpx;
+  border-radius: 4rpx;
   background-color: rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
@@ -52,14 +52,14 @@
 .progress-active {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 2px;
+  border-radius: 4rpx;
   transition: width 0.3s linear;
 } 
 
 /* 倒计时选择器样式 */
 .breath-sheet {
   width: 100vw;
-  height: 465px;
+  height: 930rpx;
   position: fixed;
   bottom: 0;
   z-index: 9999;
@@ -69,35 +69,35 @@
   height: 100%;
   overflow: hidden;
   /* border-top: 2px solid rgba(255, 255, 255, 0.1); */
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  border-top-left-radius: 48rpx;
+  border-top-right-radius: 48rpx;
   background: rgba(120, 233, 184, 0.38);
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(100rpx);
+  -webkit-backdrop-filter: blur(100rpx);
 }
 
 .bar {
-  height: 40px;
+  height: 80rpx;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 16px;
+  padding-top: 32rpx;
   background: transparent;
 }
 
 .indicator {
   background-color: rgb(190, 186, 186);
-  border-radius: 3px;
-  height: 4px;
-  width: 40px;
+  border-radius: 6rpx;
+  height: 8rpx;
+  width: 80rpx;
 }
 
 /* 选择器主体 */
 .picker-body {
   position: relative;
-  height: 250px;
-  padding-bottom: 20px;
+  height: 500rpx;
+  padding-bottom: 40rpx;
 }
 
 .picker-view {
@@ -109,7 +109,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26px;
+  font-size: 52rpx;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -120,7 +120,7 @@
   left: 57%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
+  font-size: 32rpx;
   z-index: 2;
   pointer-events: none;
 }
@@ -130,11 +130,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 40rpx;
 }
 
 .quick-title {
-  font-size: 14px;
+  font-size: 28rpx;
   color: rgba(255, 255, 255, 0.7);
   text-align: center;
   width: 100%;
@@ -143,32 +143,32 @@
 .quick-options {
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
+  margin-top: 48rpx;
   width: 100%;
 }
 
 .quick-option {
-  width: 85px;
-  height: 30px;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  width: 170rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: 28rpx;
   color: rgba(255, 255, 255, 0.8);
 }
 
 .save-button {
-  width: 256px;
-  height: 52px;
-  border-radius: 26px;
+  width: 512rpx;
+  height: 104rpx;
+  border-radius: 52rpx;
   background-color: rgba(255, 255, 255, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 32rpx;
   color: #fff;
-  margin-top: 32px;
-  margin-bottom: 42px;
+  margin-top: 64rpx;
+  margin-bottom: 84rpx;
 } 

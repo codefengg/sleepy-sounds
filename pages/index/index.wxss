@@ -51,9 +51,9 @@
 
 .title {
   position: absolute;
-  top: 98px;
-  left: 32px;
-  font-size: 28px;
+  top: 196rpx;
+  left: 64rpx;
+  font-size: 56rpx;
   font-family: 'AlibabaPuHuiTi';
   font-weight: bold;
   color: #fff;
@@ -61,9 +61,9 @@
 
 .subtitle {
   position: absolute;
-  top: 145px;
-  left: 32px;
-  font-size: 14px;
+  top: 290rpx;
+  left: 64rpx;
+  font-size: 28rpx;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -75,18 +75,18 @@
 
 .tabbar {
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 24px);
+  bottom: env(safe-area-inset-bottom, 48rpx);
   left: 50%;
   transform: translateX(-50%);
-  width: 343px;
-  height: 52px;
+  width: 686rpx;
+  height: 104rpx;
   background: #11153C;
-  border-radius: 40px;
+  border-radius: 80rpx;
   z-index: 6;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
 }
 
 .tab-item {
@@ -96,21 +96,21 @@
 }
 
 .tab-item.left {
-  margin-left: 50px;
+  margin-left: 100rpx;
 }
 
 .tab-item.right {
-  margin-right: 50px;
+  margin-right: 100rpx;
 }
 
 .tab-item .icon {
-  width: 22px;
-  height: 22px;
-  margin-bottom: 3px;
+  width: 44rpx;
+  height: 44rpx;
+  margin-bottom: 6rpx;
 }
 
 .tab-item .text {
-  font-size: 11px;
+  font-size: 22rpx;
   color: #fff;
 }
 
@@ -120,30 +120,30 @@
 
 .press-container {
   position: absolute;
-  bottom: 7px;
+  bottom: 14rpx;
   left: 50%;
   transform: translateX(-50%);
-  width: 64px;
-  height: 64px;
+  width: 128rpx;
+  height: 128rpx;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .press-icon {
-  width: 64px;
-  height: 64px;
+  width: 128rpx;
+  height: 128rpx;
   border-radius: 50%;
 }
 
 .play-pause-btn {
   position: absolute;
-  width: 27px;
-  height: 20px;
+  width: 54rpx;
+  height: 40rpx;
 }
 .play-pause-btn.playing {
-  width: 20px;
-  height: 14px;
+  width: 40rpx;
+  height: 28rpx;
 }
 
 .press-icon.rotating {
@@ -157,14 +157,14 @@
 }
 
 .main-tab-container {
-  margin-bottom: 16px;
-  padding: 0 16px;
+  margin-bottom: 32rpx;
+  padding: 0 32rpx;
 }
 
 /* 列表样式 */
 .content-list {
-  margin-top: 16px;
-  padding: 0 16px;
+  margin-top: 32rpx;
+  padding: 0 32rpx;
 }
 
 .list-item {
@@ -176,13 +176,13 @@
 
 .item-image {
   width: 100%;
-  height: 120px;
-  border-radius: 12px;
+  height: 240rpx;
+  border-radius: 24rpx;
 }
 
 .item-text {
-  margin-top: 12px;
-  font-size: 14px;
+  margin-top: 24rpx;
+  font-size: 28rpx;
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
 }
@@ -205,7 +205,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 200px;
+  height: 400rpx;
   z-index: 4;
   pointer-events: none;
   background: linear-gradient(180deg, #000034 0%, rgba(0, 0, 52, 0) 100%);
@@ -249,8 +249,8 @@
 }
 
 .grid-container {
-  margin-top: 16px;
-  padding: 0 16px;
+  margin-top: 32rpx;
+  padding: 0 32rpx;
 }
 
 .grid-list {
@@ -259,11 +259,11 @@
 }
 
 .grid-item {
-  width: calc((100% - 26px) / 3);
-  margin-right: 13px;
-  margin-bottom: 20px;
+  width: calc((100% - 52rpx) / 3);
+  margin-right: 26rpx;
+  margin-bottom: 40rpx;
   animation: fadeInUp 0.5s ease both;
-  transform: translateY(20px);
+  transform: translateY(40rpx);
   opacity: 0;
 }
 
@@ -275,13 +275,13 @@
 .custom-grid {
   display: flex !important;
   flex-wrap: wrap !important;
-  padding: 0 16px !important;
+  padding: 0 32rpx !important;
 }
 
 .grid-item {
-  width: calc((100% - 26px) / 3) !important;
-  margin-right: 13px !important;
-  margin-bottom: 20px !important;
+  width: calc((100% - 52rpx) / 3) !important;
+  margin-right: 26rpx !important;
+  margin-bottom: 40rpx !important;
   padding: 0 !important;
   flex: none !important;
 }
@@ -311,12 +311,12 @@
 .ripple {
   position: absolute;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: 160rpx;
+  height: 160rpx;
   animation: ripple 2.5s cubic-bezier(0.1, 0.42, 0.85, 1) infinite;
   opacity: 0;
 }
@@ -341,7 +341,7 @@
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(40rpx);
   }
   100% {
     opacity: 1;
@@ -354,18 +354,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 0;
+  padding: 120rpx 0;
   width: 100%;
 }
 
 .empty-icon {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 16px;
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 32rpx;
   opacity: 0.7;
 }
 
 .empty-text {
-  font-size: 14px;
+  font-size: 28rpx;
   color: rgba(255, 255, 255, 0.6);
 }

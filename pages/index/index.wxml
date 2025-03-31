@@ -4,7 +4,7 @@
   <!-- 遮罩层 -->
   <view class="mask"></view>
   <!-- 上部蒙层 -->
-  <image class="top-overlay" src="/assets/images/rectangle-top.png" mode="widthFix"></image>
+  <view class="top-overlay" mode="widthFix"></view>
   <!-- 下部蒙层 -->
   <image class="bottom-overlay" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
   <!-- 内容区域 -->
@@ -43,7 +43,7 @@
 <draggable-sheet class="sheet" style="height: {{sheetHeight}}px;" initial-child-size="{{minSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" snap-sizes="{{snapSizes}}" worklet:onsizeupdate="onSizeUpdate">
   <!-- 下部蒙层放在这里 -->
   <image class="bottom-overlay-inner" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
-  <scroll-container backgroundColor="rgba(49, 59, 131, 0.24)" enableBlur="{{true}}">
+  <scroll-container backgroundColor="rgba(31, 43, 154, 0.24)" enableBlur="{{true}}">
     <!-- 头部插槽内容 -->
     <view slot="header" class="main-tab-container">
       <tab-nav id="tab-nav" currentTabId="{{currentTabId}}" bind:categoryChange="onCategoryChange"></tab-nav>

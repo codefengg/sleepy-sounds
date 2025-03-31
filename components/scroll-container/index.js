@@ -25,7 +25,7 @@ Component({
     // 背景颜色
     backgroundColor: {
       type: String,
-      value: 'rgba(49, 59, 131, 0.24)'
+      value: 'rgba(31, 43, 154, 0.24)'
     },
     // 是否启用模糊效果
     enableBlur: {

@@ -7,50 +7,59 @@ const _ = db.command
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { action } = event
+  const { action, data } = event
   
-  // 根据action参数执行不同操作
   switch (action) {
-    case 'get':
-      return getImages(event)
-    case 'add':
-      return addImage(event)
-    case 'delete':
-      return deleteImage(event)
+    case 'getImages':
+      return await getImages(data)
+    case 'addImage':
+      return await addImage(data)
+    case 'updateImage':
+      return await updateImage(data)
+    case 'deleteImage':
+      return await deleteImage(data)
     default:
       return {
         success: false,
-        error: '未知的操作类型'
+        message: '未知操作'
       }
   }
 }
 
 // 获取图片列表
-async function getImages(event) {
-  const { type, limit = 20, skip = 0 } = event
+async function getImages(data = {}) {
+  const { type, limit = 20, skip = 0 } = data
   
   try {
     let query = db.collection('library')
-    
-    // 如果指定了类型，则按类型筛选
-    if (type) {
-      query = query.where({ type })
-    }
     
     // 获取总数
     const countResult = await query.count()
     const total = countResult.total
     
-    // 获取图片列表，按创建时间倒序排列
-    const imagesResult = await query
-      .orderBy('createTime', 'desc')
+    // 获取图片列表
+    const result = await query
       .skip(skip)
       .limit(limit)
       .get()
     
+    // 处理返回结果
+    const images = result.data.map(item => {
+      return {
+        _id: item._id,
+        name: item.name || '',
+        largeUrl: item.largeUrl,
+        thumbnailUrl: item.thumbnailUrl,
+        playUrl: item.playUrl,
+        videoUrl: item.videoUrl || '',
+        animatedUrl: item.animatedUrl || '',
+        createTime: item.createTime
+      }
+    })
+    
     return {
       success: true,
-      data: imagesResult.data,
+      data: images,
       total,
       limit,
       skip
@@ -58,97 +67,113 @@ async function getImages(event) {
   } catch (err) {
     return {
       success: false,
-      error: err.message || '获取图片列表失败'
+      message: err.message || '获取图片列表失败'
     }
   }
 }
 
 // 添加图片
-async function addImage(event) {
-  const { url, name, type, size, description } = event
+async function addImage(data) {
+  const { name, largeUrl, thumbnailUrl, playUrl, videoUrl, animatedUrl } = data
   
-  // 输入验证
-  if (!url || url.trim() === '') {
+  // 验证必填字段
+  if (!name || !largeUrl || !thumbnailUrl || !playUrl) {
     return {
       success: false,
-      error: '图片URL不能为空'
-    }
-  }
-  
-  if (!name || name.trim() === '') {
-    return {
-      success: false,
-      error: '图片名称不能为空'
+      message: '名称、大图URL、缩略图URL和播放图URL为必填项'
     }
   }
   
   try {
-    // 添加图片记录
-    const newImage = {
-      url: url.trim(),
-      name: name.trim(),
-      createTime: db.serverDate(),
-      // 可选字段
-      type: type || 'default',
-      size: size || 0,
-      description: description || ''
-    }
-    
+    // 添加到数据库
     const result = await db.collection('library').add({
-      data: newImage
+      data: {
+        name,
+        largeUrl,
+        thumbnailUrl,
+        playUrl,
+        videoUrl: videoUrl || '',
+        animatedUrl: animatedUrl || '',
+        createTime: db.serverDate()
+      }
     })
-    
-    // 获取新添加的图片完整信息
-    const newImageData = await db.collection('library').doc(result._id).get()
     
     return {
       success: true,
-      data: newImageData.data
+      data: {
+        _id: result._id
+      },
+      message: '添加成功'
     }
   } catch (err) {
     return {
       success: false,
-      error: err.message || '添加图片失败'
+      message: err.message || '添加图片失败'
+    }
+  }
+}
+
+// 更新图片
+async function updateImage(data) {
+  const { _id, name, largeUrl, thumbnailUrl, playUrl, videoUrl, animatedUrl } = data
+  
+  if (!_id) {
+    return {
+      success: false,
+      message: '缺少图片ID'
+    }
+  }
+  
+  try {
+    // 构建更新对象
+    const updateData = {}
+    
+    if (name !== undefined) updateData.name = name
+    if (largeUrl !== undefined) updateData.largeUrl = largeUrl
+    if (thumbnailUrl !== undefined) updateData.thumbnailUrl = thumbnailUrl
+    if (playUrl !== undefined) updateData.playUrl = playUrl
+    if (videoUrl !== undefined) updateData.videoUrl = videoUrl
+    if (animatedUrl !== undefined) updateData.animatedUrl = animatedUrl
+    
+    // 更新数据库
+    await db.collection('library').doc(_id).update({
+      data: updateData
+    })
+    
+    return {
+      success: true,
+      message: '更新成功'
+    }
+  } catch (err) {
+    return {
+      success: false,
+      message: err.message || '更新图片失败'
     }
   }
 }
 
 // 删除图片
-async function deleteImage(event) {
-  const { id } = event
+async function deleteImage(data) {
+  const { _id } = data
   
-  // 验证ID是否存在
-  if (!id) {
+  if (!_id) {
     return {
       success: false,
-      error: '图片ID不能为空'
+      message: '缺少图片ID'
     }
   }
   
   try {
-    // 检查图片是否存在
-    const imageResult = await db.collection('library').doc(id).get()
-    if (!imageResult.data) {
-      return {
-        success: false,
-        error: '要删除的图片不存在'
-      }
-    }
-    
-    // 删除图片记录
-    await db.collection('library').doc(id).remove()
-    
-    // 注意：这里只删除了数据库中的记录，并没有从云存储中删除实际的图片文件
-    // 如果需要同时删除云存储中的文件，还需要调用云存储的删除API
+    await db.collection('library').doc(_id).remove()
     
     return {
       success: true,
-      deletedId: id
+      message: '删除成功'
     }
   } catch (err) {
     return {
       success: false,
-      error: err.message || '删除图片失败'
+      message: err.message || '删除图片失败'
     }
   }
 }

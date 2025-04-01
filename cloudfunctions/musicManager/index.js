@@ -161,11 +161,9 @@ async function addMusic(event) {
   const { 
     audioUrl,       // 音乐链接
     name,           // 音乐名称
-    title,          // 标题
     backgroundUrl,  // 音乐背景图
     iconUrl,        // 音乐播放图标
     listImageUrl,   // 音乐列表图
-    subtitle,       // 副标题
     categoryId      // 分类ID
   } = event
   
@@ -184,13 +182,6 @@ async function addMusic(event) {
     }
   }
   
-  if (!title || title.trim() === '') {
-    return {
-      success: false,
-      error: '标题不能为空'
-    }
-  }
-  
   if (!categoryId) {
     return {
       success: false,
@@ -203,11 +194,9 @@ async function addMusic(event) {
     const newMusic = {
       audioUrl: audioUrl.trim(),
       name: name.trim(),
-      title: title.trim(),
       backgroundUrl: backgroundUrl || '',
       iconUrl: iconUrl || '',
       listImageUrl: listImageUrl || '',
-      subtitle: subtitle || '',
       categoryId,
       createTime: db.serverDate(),
       playCount: 0,  // 初始播放次数为0

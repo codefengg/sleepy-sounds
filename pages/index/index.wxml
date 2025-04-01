@@ -58,7 +58,7 @@
           <open-container closed-elevation="2" closed-border-radius="12" open-elevation="8" open-border-radius="0" transition-type="fade" transition-duration="400" middle-color="#18193D" closed-color="transparent" open-color="transparent" bind:tap="onItemTap" data-id="{{item._id}}" style="width: 100%; background-color: transparent;">
             <image class="item-image" src="{{item.listImageUrl}}" mode="scaleToFill"></image>
           </open-container>
-          <text class="item-text">{{item.title}}</text>
+          <text class="item-text">{{item.name}}</text>
         </view>
       </view>
     </view>

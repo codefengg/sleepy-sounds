@@ -311,15 +311,16 @@ Page({
     cloudHelper.callFunction('musicManager', {
       action: 'getAll'
     }).then(res => {
-      if (res.success) {
+      console.log('后台更新音乐数据', res);
+      if (res.result.success) {
         // 更新数据和缓存
         this.setData({
-          allMusicList: res.data
+          allMusicList: res.result.data
         });
         
         // 缓存数据
         wx.setStorageSync('allMusicCache', {
-          data: res.data,
+          data: res.result.data,
           timestamp: new Date().getTime()
         });
         

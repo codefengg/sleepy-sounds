@@ -40,9 +40,46 @@ async function getMusicList(event) {
     
     // 如果有分类ID，则按分类筛选
     if (categoryId) {
-      query = query.where({
-        categoryId: categoryId
-      })
+      // 首先检查这个分类ID是一级分类还是二级分类
+      const categoryResult = await db.collection('category').doc(categoryId).get()
+        .catch(() => ({ data: null })) // 捕获可能的错误
+      
+      if (categoryResult.data) {
+        const category = categoryResult.data
+        
+        // 如果没有parentId，说明是一级分类
+        if (!category.parentId) {
+          console.log('查询一级分类:', categoryId)
+          
+          // 查找所有以该分类为父级的二级分类
+          const subCategoriesResult = await db.collection('category')
+            .where({ parentId: categoryId })
+            .get()
+          
+          const subCategoryIds = subCategoriesResult.data.map(item => item._id)
+          
+          console.log('一级分类下的二级分类:', subCategoryIds)
+          
+          // 构建查询条件：直接关联到该一级分类，或关联到其下任一二级分类
+          if (subCategoryIds.length > 0) {
+            query = query.where(_.or([
+              { categoryId: categoryId },
+              { categoryId: _.in(subCategoryIds) }
+            ]))
+          } else {
+            // 如果没有二级分类，只查询直接关联到该一级分类的音乐
+            query = query.where({ categoryId: categoryId })
+          }
+        } else {
+          // 如果有parentId，说明是二级分类，直接查询关联到该分类的音乐
+          console.log('查询二级分类:', categoryId)
+          query = query.where({ categoryId: categoryId })
+        }
+      } else {
+        // 分类不存在，仍然按原来的方式查询
+        console.log('分类不存在，按ID直接查询:', categoryId)
+        query = query.where({ categoryId: categoryId })
+      }
     }
     
     const result = await query.get()
@@ -52,6 +89,7 @@ async function getMusicList(event) {
       data: result.data
     }
   } catch (err) {
+    console.error('获取音乐列表失败:', err)
     return {
       success: false,
       error: err.message || '获取音乐列表失败'

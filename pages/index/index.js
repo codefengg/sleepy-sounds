@@ -90,6 +90,9 @@ Page({
       // 没有缓存，获取新数据
       this.getAllMusic();
     }
+    
+    // 获取当前时间段的标题
+    this.getCurrentTitle();
   },
 
   onUnload() {
@@ -331,6 +334,26 @@ Page({
       }
     }).catch(err => {
       console.error('后台更新音乐失败', err);
+    });
+  },
+
+  // 获取当前时间段对应的标题
+  getCurrentTitle() {
+    cloudHelper.callFunction('titleManager', {
+      action: 'getCurrentTitle'
+    }).then(res => {
+      console.log('获取当前标题结果:', res);
+      console.log('当前本地时间:', new Date().toLocaleString());
+      if (res.result && res.result.success) {
+        const titleData = res.result.data;
+        console.log('匹配到的标题数据:', titleData);
+        this.setData({
+          title: titleData.title,
+          subtitle: titleData.subtitle || ''
+        });
+      }
+    }).catch(err => {
+      console.error('获取标题失败', err);
     });
   },
 })

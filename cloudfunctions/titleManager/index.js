@@ -313,9 +313,14 @@ async function getCurrentTitle() {
     
     // 获取当前时间
     const now = new Date()
-    const hours = now.getHours()
-    const minutes = now.getMinutes()
+    // 使用云函数所在服务器的时区
+    // 如果需要使用中国时区，需要进行时区调整
+    const chinaTime = new Date(now.getTime() + (8 * 60 * 60 * 1000)) // 调整为东八区
+    const hours = chinaTime.getUTCHours()
+    const minutes = chinaTime.getUTCMinutes()
     const currentMinutes = hours * 60 + minutes
+    
+    console.log(`当前时间: ${hours}:${minutes}, 转换为分钟: ${currentMinutes}`)
     
     // 查找当前时间所在的时间段
     let currentTitle = null
@@ -324,16 +329,20 @@ async function getCurrentTitle() {
       const startMinutes = convertTimeToMinutes(item.startTime)
       const endMinutes = convertTimeToMinutes(item.endTime)
       
+      console.log(`检查时间段: ${item.title}, ${item.startTime}(${startMinutes}分钟)-${item.endTime}(${endMinutes}分钟)`)
+      
       // 处理跨天的情况
       if (endMinutes < startMinutes) {
         // 例如 23:00-06:00
         if (currentMinutes >= startMinutes || currentMinutes < endMinutes) {
+          console.log(`匹配跨天时间段: ${item.title}`)
           currentTitle = item
           break
         }
       } else {
         // 正常情况，例如 06:00-12:00
         if (currentMinutes >= startMinutes && currentMinutes < endMinutes) {
+          console.log(`匹配正常时间段: ${item.title}`)
           currentTitle = item
           break
         }
@@ -342,6 +351,7 @@ async function getCurrentTitle() {
     
     // 如果没有找到匹配的时间段，返回默认标题
     if (!currentTitle) {
+      console.log('未找到匹配的时间段，返回默认标题')
       return {
         success: true,
         data: {
@@ -352,6 +362,7 @@ async function getCurrentTitle() {
       }
     }
     
+    console.log(`返回匹配的时间段标题: ${currentTitle.title}`)
     return {
       success: true,
       data: {
@@ -363,6 +374,7 @@ async function getCurrentTitle() {
       }
     }
   } catch (err) {
+    console.error('获取当前标题出错:', err)
     return {
       success: false,
       error: err.message || '获取当前标题失败'

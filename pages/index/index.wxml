@@ -40,29 +40,31 @@
     </view>
   </view>
 </view>
-<draggable-sheet class="sheet" style="height: {{sheetHeight}}px;" initial-child-size="{{minSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" snap-sizes="{{snapSizes}}" worklet:onsizeupdate="onSizeUpdate">
+<view class="sheet drawer-content" style="height: {{sheetHeight}}px;" initial-child-size="{{minSize}}" min-child-size="{{minSize}}" max-child-size="{{maxSize}}" snap="{{true}}" snap-sizes="{{snapSizes}}" worklet:onsizeupdate="onSizeUpdate">
   <!-- 下部蒙层放在这里 -->
   <image class="bottom-overlay-inner" src="/assets/images/rectangle-bottom.png" mode="widthFix"></image>
-  <scroll-container backgroundColor="rgba(31, 43, 154, 0.24)" enableBlur="{{true}}">
+  <view class="scrollable with-blur">
     <!-- 头部插槽内容 -->
-    <view slot="header" class="main-tab-container">
+    <view class="main-tab-container">
       <tab-nav id="tab-nav" currentTabId="{{currentTabId}}" bind:categoryChange="onCategoryChange"></tab-nav>
     </view>
     <!-- 默认插槽内容 -->
-    <view class="grid-list">
-      <view wx:if="{{gridList.length === 0}}" class="empty-state">
-        <text class="empty-text">暂无内容</text>
-      </view>
-      <view class="grid-item" wx:for="{{gridList}}" wx:key="{{item._id}}" style="animation-delay: {{index * 0.05}}s">
-        <view class="list-item">
-          <open-container closed-elevation="2" closed-border-radius="12" open-elevation="8" open-border-radius="0" transition-type="fade" transition-duration="400" middle-color="#18193D" closed-color="transparent" open-color="transparent" bind:tap="onItemTap" data-id="{{item._id}}" style="width: 100%; background-color: transparent;">
-            <image class="item-image" src="{{item.listImageUrl}}" mode="scaleToFill"></image>
-          </open-container>
-          <text class="item-text">{{item.name}}</text>
+    <scroll-view scroll-y show-scrollbar="{{false}}" type="custom" class="scroll-content">
+      <view class="grid-list">
+        <view wx:if="{{gridList.length === 0}}" class="empty-state">
+          <text class="empty-text">暂无内容</text>
+        </view>
+        <view class="grid-item" wx:for="{{gridList}}" wx:key="{{item._id}}" style="animation-delay: {{index * 0.05}}s">
+          <view class="list-item" style="width: {{cardWidth}}px;">
+            <open-container closed-elevation="2" closed-border-radius="12" open-elevation="8" open-border-radius="0" transition-type="fade" transition-duration="400" middle-color="#18193D" closed-color="transparent" open-color="transparent" bind:tap="onItemTap" data-id="{{item._id}}" style="width: 100%; background-color: transparent;">
+              <image class="item-image" src="{{item.listImageUrl}}" mode="scaleToFill" style="width: {{cardWidth}}px; height: {{cardHeight}}px;"></image>
+            </open-container>
+            <text class="item-text">{{item.name}}</text>
+          </view>
         </view>
       </view>
-    </view>
-    <!-- 底部间距 -->
-    <view style="height: 84px;"></view>
-  </scroll-container>
-</draggable-sheet>
+      <!-- 底部间距 -->
+      <view style="height: 84px;"></view>
+    </scroll-view>
+  </view>
+</view>

@@ -158,6 +158,8 @@
 
 .main-tab-container {
   margin-bottom: 32rpx;
+  /* padding: 0 32rpx; */
+  margin-top: 24rpx;
   padding: 0 32rpx;
 }
 
@@ -259,7 +261,6 @@
 }
 
 .grid-item {
-  width: calc((100% - 52rpx) / 3);
   margin-right: 26rpx;
   margin-bottom: 40rpx;
   animation: fadeInUp 0.5s ease both;
@@ -279,7 +280,6 @@
 }
 
 .grid-item {
-  width: calc((100% - 52rpx) / 3) !important;
   margin-right: 26rpx !important;
   margin-bottom: 40rpx !important;
   padding: 0 !important;
@@ -368,4 +368,52 @@
 .empty-text {
   font-size: 28rpx;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.scrollable {
+  height: 100%;
+  overflow: hidden;
+  border-top-left-radius: 48rpx;
+  border-top-right-radius: 48rpx;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  /* 兼容性写法 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  position: relative;
+  /* box-shadow: 0 -2px 0 rgba(255, 255, 255, 0.1); */
+  border: 4rpx solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 -16rpx 48rpx rgba(0, 0, 0, 0.1);
+  width: calc(100% + 8rpx);
+  margin: 0 -4rpx 0 -4rpx;
+  transition: all 0.3s ease;
+}
+
+.with-blur {
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
+}
+
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+} 
+
+.scroll-content {
+  flex: 1;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding: 0 32rpx;
+}
+
+/* 隐藏滚动条 */
+.scroll-content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
 }

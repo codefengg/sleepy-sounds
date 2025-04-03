@@ -1,6 +1,20 @@
-const { windowHeight } = wx.getSystemInfoSync()
+const { windowHeight, windowWidth } = wx.getSystemInfoSync()
 const menuRect = wx.getMenuButtonBoundingClientRect()
-const sheetHeight = windowHeight - (menuRect.bottom + menuRect.height + 60)
+// const sheetHeight = windowHeight - (menuRect.bottom + menuRect.height + 60)
+
+const designGap = 13;
+const designMargin = 16;
+
+const rate = windowWidth / 375;
+const cardRate = 120 / 106;
+
+const actualGap = designGap * rate;
+const actualMargin = designMargin * rate;
+
+const cardWidth = Math.floor((windowWidth - (actualGap * 2) - (actualMargin * 2)) / 3);
+const cardHeight = cardWidth * cardRate;
+
+const sheetHeight = cardHeight * 2 + 109 * rate + 32 * 2 * rate + 115 * rate;
 
 const middleSize = 0.6
 
@@ -43,6 +57,8 @@ Page({
     rotationTimer: null,
     allMusicList: [], // 存储所有音乐数据
     currentCategoryId: '', // 当前选中的分类ID
+    cardWidth,
+    cardHeight,
   },
 
   onSizeUpdate(e) {
